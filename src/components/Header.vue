@@ -1,18 +1,14 @@
 <template>
-  <header class="header">
+  <header>
     <div class="container">
-      <div class="logo">MetaWall</div>
+      <router-link to="/" class="btn logo">MetaWall</router-link>
       <div ref="memberWrapper" class="member-wrapper">
         <div class="member-btn btn" @click="toggle()" @keydown="toggle()">
           <img src="../assets/img/user.png" alt="" class="member-photo" />
           <span class="member-text">Member</span>
         </div>
-        <div
-          ref="memberDropdown"
-          v-if="select"
-          class="dropdown-wrapper"
-        >
-          <ul class="dropdown">
+        <div ref="memberDropdown" v-if="select" class="border bg-white dropdown-wrapper">
+          <ul class="border bg-white dropdown">
             <li class="btn">我的貼文牆</li>
             <li class="btn">修改個人資料</li>
             <li class="btn">登出</li>
@@ -25,7 +21,7 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'HeaderCom',
   data() {
     return {
       select: false,
@@ -50,13 +46,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.header {
-  position: fixed;
+header {
+  position: sticky;
   top: 0;
   left: 0;
-
+  z-index: 100;
   width: 100%;
   height: $h-header;
+
   border-bottom: 3px solid $black;
   background: $white;
 }
@@ -65,40 +62,40 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   height: 100%;
 }
 
 .logo {
-  font-family: 'Paytone One', sans-serif;
   font-size: 1.625rem;
+  font-family: 'Paytone One', sans-serif;
+  color: $black;
 }
 
 .member-wrapper {
   position: relative;
-
   height: 100%;
 }
 
 .member-btn {
   display: flex;
   align-items: center;
-
   height: 100%;
 }
 
 .member-photo {
+  margin-right: 10px;
   width: 30px;
   height: 30px;
-  margin-right: 10px;
 }
 
 .member-text {
-  border-bottom: 2px solid $black;
   padding: 0 0.25rem 0.25rem 0.25rem;
-  font-family: 'Azeret Mono', monospace;
-  font-size: 1rem;
+
+  border-bottom: 2px solid $black;
+
   font-weight: Bold;
+  font-size: 1rem;
+  font-family: 'Azeret Mono', monospace;
 }
 
 .dropdown-wrapper {
@@ -106,26 +103,20 @@ export default {
   bottom: 0;
   left: 0;
 
-  border: 2px solid $black;
-  background: $white;
   transform: translateY(100%);
 }
 
 .dropdown {
-  border: 2px solid $black;
-  background: $white;
   transform: translate(-5px, -5px);
 
   .btn {
     padding: 0.5rem 2.5rem;
+
     text-align: center;
     white-space: nowrap;
-    transition: $transition-1;
-
     &:not(:last-child) {
       border-bottom: 2px solid $black;
     }
-
     &:hover {
       background: $light-grey;
     }

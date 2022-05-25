@@ -11,5 +11,5 @@ module.exports = defineConfig({
     },
   },
 
-  publicPath: '/metawall_frontend/dist/'
+  publicPath: '/metawall/dist/'
 });

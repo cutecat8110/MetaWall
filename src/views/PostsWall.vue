@@ -1,20 +1,44 @@
 <template>
   <div class="posts-wall">
     <div class="subnav">
-      <div class="btn border bg-white filter">
-        最新貼文
-        <span class="material-icons">expand_more</span>
+      <div ref="filterWrapper" class="filter-wrapper">
+        <button type="button" class="btn border bg-white filter" @click="toggle()">
+          {{ asc ? '最舊貼文' : '最新貼文' }}
+          <span class="material-icons">expand_more</span>
+        </button>
+        <div ref="filterDropdown" v-if="select" class="border bg-white dropdown-wrapper">
+          <ul class="border bg-white dropdown">
+            <li>
+              <router-link :to="{ query: query('desc') }" class="btn" @click="toggle()">
+                最新貼文
+                <span v-if="!asc" class="material-icons">check</span>
+              </router-link>
+            </li>
+            <li>
+              <router-link :to="{ query: query('asc') }" class="btn" @click="toggle()">
+                最舊貼文
+                <span v-if="asc" class="material-icons">check</span>
+              </router-link>
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="border bg-white search">
         <label for="search">
-          <input id="search" type="text" placeholder="搜尋貼文" />
+          <input
+            id="search"
+            v-model="search"
+            type="text"
+            placeholder="搜尋貼文"
+            @keyup.enter="searchEnter"
+          />
         </label>
-        <div class="btn">
+        <router-link :to="{ query: query() }" class="btn">
           <span class="material-icons"> search </span>
-        </div>
+        </router-link>
       </div>
     </div>
-    <Posts></Posts>
+    <Posts :posts="posts"></Posts>
   </div>
 </template>
 
@@ -26,14 +50,69 @@ export default {
   components: {
     Posts,
   },
+  data() {
+    return {
+      select: false,
+      posts: {},
+      search: '',
+      asc: false,
+    };
+  },
+  mounted() {
+    this.getPosts();
+    document.addEventListener('click', this.filterDropdownClick);
+  },
+  beforeUnmount() {
+    document.removeEventListener('click', this.filterDropdownClick);
+  },
+  watch: {
+    $route() {
+      if (this.$route.name === 'posts-wall') this.getPosts();
+    },
+  },
+  methods: {
+    getPosts() {
+      this.$store.commit('Load', true);
+      const api = `${process.env.VUE_APP_API}posts${this.$route.fullPath}`;
+      this.$http.get(api).then((res) => {
+        this.asc = this.$route.query.timeSort === 'asc';
+        this.search = this.$route.query.q ? this.$route.query.q : '';
+        this.posts = res.data.data;
+        this.$store.commit('Load', false);
+      });
+    },
+    query(asc) {
+      const query = {};
+      if (asc === 'asc') query.timeSort = 'asc';
+      if (this.search !== '') query.q = this.search;
+      if (!asc && this.search === '') query.timeSort = this.$route.query.timeSort;
+      return query;
+    },
+    toggle() {
+      this.select = !this.select;
+    },
+    filterDropdownClick(e) {
+      if (this.$refs.filterDropdown) {
+        const isSelf = this.$refs.filterWrapper.contains(e.target);
+        if (!isSelf) {
+          this.select = false;
+        }
+      }
+    },
+    searchEnter() {
+      this.$router.push({
+        query: this.query(),
+      });
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .posts-wall {
-  width: 100%;
   display: grid;
   grid-gap: 1rem;
+  width: 100%;
 }
 
 .subnav {
@@ -42,7 +121,16 @@ export default {
   grid-template-columns: 9.75rem 1fr;
 }
 
+.filter-wrapper {
+  position: relative;
+}
+
 .filter {
+  width: 100%;
+}
+
+.filter,
+.dropdown .btn {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -51,8 +139,31 @@ export default {
   }
 }
 
+.dropdown-wrapper {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  transform: translateY(calc(100% - 2px));
+}
+
+.dropdown {
+  transform: translate(-5px, -5px);
+
+  li {
+    &:not(:last-child) {
+      border-bottom: 2px solid $black;
+    }
+    &:hover {
+      background: $light-grey;
+    }
+  }
+}
+
 .filter,
-.search label {
+.search label,
+.dropdown .btn {
   padding: 0.75rem 1rem;
 }
 

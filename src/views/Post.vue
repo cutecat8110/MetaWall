@@ -7,6 +7,7 @@
       <h2>貼文內容</h2>
       <label for="content" class="border content-wrapper">
         <textarea
+          v-model="content"
           name="content"
           placeholder="輸入您的貼文內容"
           id="content"
@@ -14,10 +15,10 @@
         ></textarea>
       </label>
       <button type="button" class="btn upload">上傳圖片</button>
-
-      <img src="../assets/img/image.png" alt="" class="preview" />
+      <input type="text" v-model="image" />
+      <img v-if="image" :src="image" alt="" class="border preview" />
       <div class="submit-wrapper">
-        <button type="button" class="btn border submit">送出貼文</button>
+        <button type="button" class="btn border submit" @click="createPosts">送出貼文</button>
       </div>
     </div>
   </div>
@@ -26,6 +27,32 @@
 <script>
 export default {
   name: 'PostView',
+  data() {
+    return {
+      content: '',
+      image: '',
+    };
+  },
+  methods: {
+    createPosts() {
+      this.$store.commit('Load', true);
+      const api = `${process.env.VUE_APP_API}posts`;
+      const data = {
+        user: '6284bd0df623a5fcf56630f0',
+        image: this.image,
+        content: this.content,
+      };
+      this.$http
+        .post(api, data)
+        .then((res) => {
+          console.log(res);
+          this.$store.commit('Load', false);
+        })
+        .then(() => {
+          this.$router.push({ name: 'posts-wall' });
+        });
+    },
+  },
 };
 </script>
 
@@ -83,6 +110,7 @@ h2 {
 }
 
 .preview {
+  width: 100%;
   margin-top: 1rem;
 
   border-radius: 0.5rem;

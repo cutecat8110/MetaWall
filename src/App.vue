@@ -1,6 +1,31 @@
 <template>
-  <router-view />
+  <div class="app">
+    <loading :active="isLoading" :opacity="opacity" :backgroundColor="backgroundColor" />
+    <router-view />
+  </div>
 </template>
+
+<script>
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+
+export default {
+  components: {
+    Loading,
+  },
+  data() {
+    return {
+      opacity: 0.5,
+      backgroundColor: '#EFECE7',
+    };
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 @import 'assets/scss/app';

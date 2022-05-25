@@ -1,27 +1,27 @@
 <template>
-  <div v-for="(item, index) in list" :key="index" class="border bg-white posts">
+  <div v-for="(item, index) in posts" :key="index" class="border bg-white posts">
     <div class="header">
       <img src="../assets/img/user.png" alt="" class="photo" />
       <div class="header-details">
-        <div class="author">邊緣小杰</div>
-        <div class="create-time">2022/1/10 12:00</div>
+        <div class="author">{{ item.user.name }}</div>
+        <div class="create-time">{{ $filters.date(item.createdAt) }}</div>
       </div>
     </div>
     <p>
-      {{ `外面看起來就超冷....我決定回被窩繼續睡....>.<` }}
+      {{ item.content }}
     </p>
-    <img src="../assets/img/image.png" alt="" class="posts-photo" />
-    <div class="btn like">
+    <img :src="item.image" alt="" class="posts-photo" />
+    <button type="button" class="btn like">
       <span class="material-icons"> thumb_up_off_alt </span>
-      <div class="qty">12</div>
-    </div>
+      <div class="qty">{{ item.likes }}</div>
+    </button>
     <div class="user">
       <img src="../assets/img/user.png" alt="" class="photo" />
       <div class="border message-add">
         <label for="message">
           <input id="message" type="text" placeholder="留言..." />
         </label>
-        <div class="btn">留言</div>
+        <button type="button" class="btn">留言</button>
       </div>
     </div>
     <div class="message">
@@ -42,14 +42,14 @@
 <script>
 export default {
   name: 'PostsCom',
+  props: ['posts'],
   data() {
-    return {
-      list: [
-        { id: '123456789', name: '選項 1' },
-        { id: '234567890', name: '選項 2' },
-        { id: '345678901', name: '選項 3' },
-      ],
-    };
+    return {};
+  },
+  methods: {
+    isToday(date) {
+      return this.moment(date).format('YYYY/MM/DD hh:mm');
+    },
   },
 };
 </script>

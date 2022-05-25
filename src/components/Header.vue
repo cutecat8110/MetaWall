@@ -3,10 +3,10 @@
     <div class="container">
       <router-link to="/" class="btn logo">MetaWall</router-link>
       <div ref="memberWrapper" class="member-wrapper">
-        <div class="member-btn btn" @click="toggle()" @keydown="toggle()">
+        <button type="button" class="member-btn btn" @click="toggle()">
           <img src="../assets/img/user.png" alt="" class="member-photo" />
           <span class="member-text">Member</span>
-        </div>
+        </button>
         <div ref="memberDropdown" v-if="select" class="border bg-white dropdown-wrapper">
           <ul class="border bg-white dropdown">
             <li class="btn">我的貼文牆</li>
@@ -28,18 +28,44 @@ export default {
     };
   },
   mounted() {
-    document.addEventListener('click', (e) => {
+    document.addEventListener('click', this.memberDropdownClick);
+    window.addEventListener('resize', this.memberDropdownOffset);
+  },
+  updated() {
+    if (this.$refs.memberDropdown) {
+      this.memberDropdownOffset();
+    }
+  },
+  beforeUnmount() {
+    document.removeEventListener('click', this.memberDropdownClick);
+    window.removeEventListener('resize', this.memberDropdownOffset);
+  },
+  methods: {
+    toggle() {
+      this.select = !this.select;
+    },
+    memberDropdownClick(e) {
       if (this.$refs.memberDropdown) {
         const isSelf = this.$refs.memberWrapper.contains(e.target);
         if (!isSelf) {
           this.select = false;
         }
       }
-    });
-  },
-  methods: {
-    toggle() {
-      this.select = !this.select;
+    },
+    memberDropdownOffset() {
+      if (this.$refs.memberDropdown) {
+        const rem = getComputedStyle(document.documentElement).fontSize.replace(
+          /[^0-9]+(.[0-9]{2})?$/gi,
+          '',
+        );
+        const bodyWidth = document.body.clientWidth;
+        const dropdownWidth = this.$refs.memberDropdown.getBoundingClientRect().width;
+        const memberX = this.$refs.memberWrapper.getBoundingClientRect().x;
+        if (bodyWidth - rem < memberX + dropdownWidth) {
+          const offset = bodyWidth - dropdownWidth - memberX - rem + 5;
+          this.$refs.memberDropdown.style.transform = `translate(${offset}px,100%)`;
+        }
+      }
     },
   },
 };
@@ -113,7 +139,6 @@ header {
     padding: 0.5rem 2.5rem;
 
     text-align: center;
-    white-space: nowrap;
     &:not(:last-child) {
       border-bottom: 2px solid $black;
     }

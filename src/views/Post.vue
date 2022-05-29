@@ -36,7 +36,7 @@ export default {
   methods: {
     createPosts() {
       this.$store.commit('Load', true);
-      const api = `${process.env.VUE_APP_API}posts`;
+      const api = `${process.env.VUE_APP_API}post`;
       const data = {
         user: '6284bd0df623a5fcf56630f0',
         image: this.image,
@@ -44,8 +44,7 @@ export default {
       };
       this.$http
         .post(api, data)
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           this.$store.commit('Load', false);
         })
         .then(() => {

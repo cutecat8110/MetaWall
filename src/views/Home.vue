@@ -33,5 +33,4 @@ export default {
   margin-top: 3rem;
   margin-bottom: 3.875rem;
 }
-
 </style>

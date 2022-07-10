@@ -8,7 +8,7 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'posts-wall',
+        name: 'posts_wall',
         component: () => import('@/views/PostsWall.vue'),
       },
       {
@@ -19,15 +19,28 @@ const routes = [
     ],
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('../views/Login.vue'),
+    path: '/sign_in',
+    name: 'sign_in',
+    component: () => import('../views/SignIn.vue'),
+  },
+  {
+    path: '/sign_up',
+    name: 'sign_up',
+    component: () => import('../views/SignUp.vue'),
   },
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+});
+
+router.beforeEach((to) => {
+  const authorization = localStorage.getItem('authorization');
+  if (!authorization && to.name !== 'sign_in' && to.name !== 'sign_up') {
+    return '/sign_in';
+  }
+  return true;
 });
 
 export default router;

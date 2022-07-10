@@ -11,7 +11,7 @@
           <ul class="border bg-white dropdown">
             <li class="btn">我的貼文牆</li>
             <li class="btn">修改個人資料</li>
-            <li class="btn">登出</li>
+            <li class="btn" @click="signOut()" @keyup="signOut()">登出</li>
           </ul>
         </div>
       </div>
@@ -66,6 +66,10 @@ export default {
           this.$refs.memberDropdown.style.transform = `translate(${offset}px,100%)`;
         }
       }
+    },
+    signOut() {
+      localStorage.removeItem('authorization');
+      this.$router.push({ name: 'sign_in' });
     },
   },
 };
@@ -143,7 +147,7 @@ header {
       border-bottom: 2px solid $black;
     }
     &:hover {
-      background: $light-grey;
+      background: $grey-light;
     }
   }
 }

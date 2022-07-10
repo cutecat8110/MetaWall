@@ -40,7 +40,7 @@ export default {
 
   border: 2px solid $black;
   border-radius: 0.5rem;
-  background: $dark-blue;
+  background: $blue-dark;
   box-shadow: -2px 2px 0 $black;
 
   color: $white;
@@ -62,10 +62,10 @@ li {
 
   &:hover {
     > .btn-text {
-      color: $dark-blue;
+      color: $blue-dark;
     }
     .btn-icon {
-      background: $dark-blue;
+      background: $blue-dark;
 
       color: $white;
     }
@@ -81,7 +81,7 @@ li {
 
   border: 2px solid $black;
   border-radius: 50%;
-  background: $light-blue;
+  background: $blue-light;
 
   transition: $transition-1;
 }

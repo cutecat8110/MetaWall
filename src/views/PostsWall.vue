@@ -73,11 +73,16 @@ export default {
   methods: {
     getPosts() {
       this.$store.commit('Load', true);
-      const api = `${process.env.VUE_APP_API}posts${this.$route.fullPath}`;
-      this.$http.get(api).then((res) => {
+      const api = `${process.env.VUE_APP_API}/posts${this.$route.fullPath}`;
+      const headers = {
+        headers: {
+          authorization: localStorage.getItem('authorization'),
+        },
+      };
+      this.$http.get(api, headers).then((res) => {
         this.asc = this.$route.query.timeSort === 'asc';
         this.search = this.$route.query.q ? this.$route.query.q : '';
-        this.posts = res.data.data;
+        this.posts = res.data.posts;
         this.$store.commit('Load', false);
       });
     },
@@ -156,7 +161,7 @@ export default {
       border-bottom: 2px solid $black;
     }
     &:hover {
-      background: $light-grey;
+      background: $grey-light;
     }
   }
 }
@@ -187,7 +192,7 @@ export default {
     align-items: center;
     justify-content: center;
 
-    background: $dark-blue;
+    background: $grey-dark;
 
     color: $white;
 

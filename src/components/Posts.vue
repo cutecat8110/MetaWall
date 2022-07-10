@@ -76,7 +76,7 @@ export default {
     font-weight: bold;
   }
   .create-time {
-    color: $dark-grey;
+    color: $grey-dark;
     font-size: 0.75rem;
   }
 }
@@ -95,7 +95,7 @@ export default {
   display: flex;
   align-items: center;
 
-  color: $dark-blue;
+  color: $blue-dark;
 }
 
 .qty {
@@ -135,7 +135,7 @@ export default {
     justify-content: center;
     padding: 0.5rem 3rem;
 
-    background: $dark-blue;
+    background: $blue-dark;
 
     color: $white;
 
@@ -151,7 +151,7 @@ export default {
   padding: 1rem;
 
   border-radius: 0.75rem;
-  background: $light-grey;
+  background: $grey-light;
   p {
     margin-left: 3.8125rem;
   }

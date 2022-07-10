@@ -59,6 +59,9 @@ button {
     border: 0;
     padding: 0;
   }
+  &:focus-visible {
+    outline: none;
+  }
 }
 
 .btn {

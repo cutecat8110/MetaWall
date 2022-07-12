@@ -75,6 +75,9 @@ button {
   transition: $transition-1;
 
   user-select: none;
+  &:disabled {
+    pointer-events: none;
+  }
 }
 
 .border {
@@ -87,4 +90,5 @@ button {
 
 .cursor-none {
   pointer-events: none;
+  user-select: none;
 }

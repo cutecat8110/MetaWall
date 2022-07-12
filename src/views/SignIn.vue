@@ -1,37 +1,46 @@
+<!-- eslint-disable vue/no-unused-vars -->
+<!-- eslint-disable vuejs-accessibility/label-has-for -->
 <template>
   <div class="sign-in-view">
     <div class="middle">
       <div class="container border">
-        <img src="@/assets/img/login.svg" alt="" />
+        <img class="cursor-none" src="@/assets/img/sign.svg" alt="" />
         <div class="auth-content">
-          <h2>MetaWall</h2>
+          <h2 class="cursor-none">MetaWall</h2>
           <h3>到元宇宙展開全新社交圈</h3>
-          <div class="input-group">
-            <div class="border bg-white input">
-              <label for="email">
-                <input
+          <VForm v-slot="{ errors }" @submit="signIn">
+            <div class="input-group">
+              <label for="email" class="input-wrapper">
+                <VField
                   id="email"
+                  name="Email"
+                  type="email"
                   v-model="user.email"
-                  type="text"
                   placeholder="Email"
                   autocomplete="new-password"
+                  :rules="{ required: true, email: true }"
+                  class="border"
                 />
+                <error-message name="Email" />
               </label>
-            </div>
-            <div class="border bg-white input">
-              <label for="password">
-                <input
+              <label for="password" class="input-wrapper">
+                <VField
                   id="password"
-                  v-model="user.password"
+                  name="Password"
                   type="password"
+                  v-model="user.password"
                   placeholder="Password"
                   autocomplete="new-password"
+                  rules="required"
+                  class="border"
                 />
+                <error-message name="Password" />
               </label>
             </div>
-          </div>
-          <button type="button" class="btn border submit" @click="submit()">登入</button>
-          <router-link :to="{ name: 'sign_up' }" class="btn">註冊帳號</router-link>
+            <div v-if="err" class="error-message">帳號或密碼錯誤，請重新輸入！</div>
+            <button type="submit" class="btn border submit" :disabled="err">登入</button>
+          </VForm>
+          <router-link :to="{ name: 'sign_up' }" class="btn link">註冊帳號</router-link>
         </div>
       </div>
     </div>
@@ -47,22 +56,32 @@ export default {
         email: 'test2@example.com',
         password: 'Test123456',
       },
+      err: false,
     };
   },
+  watch: {
+    user: {
+      handler() {
+        if (this.err) {
+          this.err = false;
+        }
+      },
+      deep: true,
+    },
+  },
   methods: {
-    submit() {
+    signIn() {
       this.$store.commit('Load', true);
       const api = `${process.env.VUE_APP_API}/user/sign_in`;
       this.$http
         .post(api, this.user)
         .then((res) => {
           const token = `Bearer ${res.data.user.token}`;
-
           localStorage.setItem('authorization', token);
           this.$router.push({ name: 'posts_wall' });
         })
-        .catch((err) => {
-          console.log(err.response.data);
+        .catch(() => {
+          this.err = true;
         })
         .then(() => {
           this.$store.commit('Load', false);

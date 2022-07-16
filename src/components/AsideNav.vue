@@ -1,19 +1,21 @@
 <template>
-  <div class="border bg-white">
-    <router-link to="/post" class="btn post">張貼動態</router-link>
+  <div class="aside-nav border bg-white">
+    <router-link to="/post" class="btn post radius">張貼動態</router-link>
     <ul>
       <li class="btn">
-        <img src="../assets/img/user.png" alt="" class="member-photo" />
-        <span class="btn-text">邊緣小杰</span>
+        <div class="btn-icon user-photo border circle">
+          <img @load="successLoadImg" :src="user.photo" alt="" class="hide" />
+        </div>
+        <span class="btn-text">{{ user.name }}</span>
       </li>
       <li class="btn">
-        <div class="btn-icon">
+        <div class="btn-icon border circle">
           <span class="material-icons"> notifications_none </span>
         </div>
         <span class="btn-text">追蹤名單</span>
       </li>
       <li class="btn">
-        <div class="btn-icon">
+        <div class="btn-icon border circle">
           <span class="material-icons"> thumb_up_off_alt </span>
         </div>
         <span class="btn-text">我按讚的文章</span>
@@ -25,11 +27,17 @@
 <script>
 export default {
   name: 'AsideNavCom',
+  computed: {
+    user() {
+      const { user } = this.$store.state;
+      return user;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.border {
+.aside-nav {
   position: sticky;
   top: 108px;
   padding: 2rem 1.5rem;
@@ -39,7 +47,6 @@ export default {
   padding: 1rem;
 
   border: 2px solid $black;
-  border-radius: 0.5rem;
   background: $blue-dark;
   box-shadow: -2px 2px 0 $black;
 
@@ -79,8 +86,6 @@ li {
   width: 3.125rem;
   height: 3.125rem;
 
-  border: 2px solid $black;
-  border-radius: 50%;
   background: $blue-light;
 
   transition: $transition-1;

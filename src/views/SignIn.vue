@@ -1,5 +1,3 @@
-<!-- eslint-disable vue/no-unused-vars -->
-<!-- eslint-disable vuejs-accessibility/label-has-for -->
 <template>
   <div class="sign-in-view">
     <div class="middle">
@@ -53,8 +51,8 @@ export default {
   data() {
     return {
       user: {
-        email: 'test2@example.com',
-        password: 'Test123456',
+        email: '',
+        password: '',
       },
       err: false,
     };

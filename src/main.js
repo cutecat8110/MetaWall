@@ -14,6 +14,7 @@ import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 
 // 自訂
 import { date } from './methods/filters';
+import { successLoadImg } from './methods/successLoadImg';
 
 // 原生
 import App from './App.vue';
@@ -36,6 +37,8 @@ const app = createApp(App);
 app.config.globalProperties.$filters = {
   date,
 };
+
+app.config.globalProperties.successLoadImg = successLoadImg;
 
 app.use(store);
 app.use(router);

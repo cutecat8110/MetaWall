@@ -4,7 +4,9 @@
       <router-link to="/" class="btn logo">MetaWall</router-link>
       <div ref="memberWrapper" class="member-wrapper">
         <button type="button" class="member-btn btn" @click="toggle()">
-          <img src="../assets/img/user.png" alt="" class="member-photo" />
+          <div class="user-photo border circle">
+            <img @load="successLoadImg" :src="src" alt="" class="hide" />
+          </div>
           <span class="member-text">Member</span>
         </button>
         <div ref="memberDropdown" v-if="select" class="border bg-white dropdown-wrapper">
@@ -39,6 +41,12 @@ export default {
   beforeUnmount() {
     document.removeEventListener('click', this.memberDropdownClick);
     window.removeEventListener('resize', this.memberDropdownOffset);
+  },
+  computed: {
+    src() {
+      const { photo } = this.$store.state.user;
+      return photo;
+    },
   },
   methods: {
     toggle() {
@@ -96,9 +104,9 @@ header {
 }
 
 .logo {
+  color: $black;
   font-size: 1.625rem;
   font-family: 'Paytone One', sans-serif;
-  color: $black;
 }
 
 .member-wrapper {
@@ -110,12 +118,24 @@ header {
   display: flex;
   align-items: center;
   height: 100%;
+  &:hover {
+    .member-text {
+      color: $blue-dark;
+    }
+  }
 }
 
-.member-photo {
+.loading-image {
+  width: 30px;
+  height: 30px;
+}
+
+.user-photo {
   margin-right: 10px;
   width: 30px;
   height: 30px;
+
+  background: $blue-light;
 }
 
 .member-text {
@@ -126,6 +146,7 @@ header {
   font-weight: Bold;
   font-size: 1rem;
   font-family: 'Azeret Mono', monospace;
+  transition: $transition-1;
 }
 
 .dropdown-wrapper {

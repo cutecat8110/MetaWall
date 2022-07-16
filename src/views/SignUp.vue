@@ -1,5 +1,3 @@
-<!-- eslint-disable vue/no-unused-vars -->
-<!-- eslint-disable vuejs-accessibility/label-has-for -->
 <template>
   <div class="sign-up-view">
     <div class="middle">
@@ -8,7 +6,7 @@
         <div class="auth-content">
           <h2 class="cursor-none">MetaWall</h2>
           <h3>到元宇宙展開全新社交圈</h3>
-          <VForm ref="test" v-slot="{ errors }" @submit="signUp">
+          <VForm v-slot="{ errors }" @submit="signUp">
             <div class="input-group">
               <label for="name" class="input-wrapper">
                 <VField
@@ -70,9 +68,9 @@ export default {
   data() {
     return {
       user: {
-        name: '小雞',
-        email: 'test6@example.com',
-        password: 'Test123556',
+        name: '',
+        email: '',
+        password: '',
       },
       message: '',
     };

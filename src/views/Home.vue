@@ -22,6 +22,25 @@ export default {
     Header,
     AsideNav,
   },
+  created() {
+    this.$store.commit('Load', true);
+    const api = `${process.env.VUE_APP_API}/user/profile`;
+    const { headers } = this.$store.state;
+    this.$http
+      .get(api, headers)
+      .then((res) => {
+        const { user } = res.data;
+        delete user.followers;
+        delete user.following;
+        delete user.sex;
+        if (user.photo === '') user.photo = `${process.env.VUE_APP_USER_PHOTO}`;
+
+        this.$store.commit('user', user);
+      })
+      .then(() => {
+        this.$store.commit('Load', false);
+      });
+  },
 };
 </script>
 

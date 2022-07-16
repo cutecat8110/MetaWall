@@ -42,13 +42,36 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/vue3-essential",
+      "plugin:vue/essential",
       "@vue/airbnb"
     ],
+    "rules": {
+      "no-underscore-dangle": 0,
+      "no-unused-vars": "warn",
+      "no-console": "off",
+      "vuejs-accessibility/label-has-for": [
+        "error",
+        {
+          "components": [
+            "label"
+          ],
+          "controlComponents": [
+            "VField"
+          ],
+          "required": {
+            "every": [
+              "nesting",
+              "id"
+            ]
+          },
+          "allowChildren": false
+        }
+      ],
+      "vue/no-unused-vars": "off"
+    },
     "parserOptions": {
       "parser": "@babel/eslint-parser"
-    },
-    "rules": {}
+    }
   },
   "browserslist": [
     "> 1%",

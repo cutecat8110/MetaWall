@@ -38,17 +38,20 @@
         </router-link>
       </div>
     </div>
-    <Posts :posts="posts"></Posts>
+    <PostsNone v-if="posts.length == 0"></PostsNone>
+    <Posts v-for="item in posts" :key="item._id" :tempPost="item"></Posts>
   </div>
 </template>
 
 <script>
 import Posts from '@/components/Posts.vue';
+import PostsNone from '@/components/PostsNone.vue';
 
 export default {
   name: 'PostsWallView',
   components: {
     Posts,
+    PostsNone,
   },
   data() {
     return {
@@ -67,7 +70,7 @@ export default {
   },
   watch: {
     $route() {
-      if (this.$route.name === 'posts-wall') this.getPosts();
+      if (this.$route.name === 'posts_wall') this.getPosts();
     },
   },
   methods: {
@@ -192,7 +195,7 @@ export default {
     align-items: center;
     justify-content: center;
 
-    background: $grey-dark;
+    background: $blue-dark;
 
     color: $white;
 

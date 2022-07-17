@@ -20,6 +20,11 @@ const routes = [
         name: 'post',
         component: () => import('@/views/Post.vue'),
       },
+      {
+        path: 'profile/:p',
+        name: 'profile',
+        component: () => import('@/views/Profile.vue'),
+      },
     ],
   },
   {

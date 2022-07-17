@@ -2,11 +2,13 @@
   <div class="post border bg-white radius">
     <!-- 貼文資訊 -->
     <div class="header">
-      <div class="user-photo border circle">
+      <router-link :to="{ path: `/profile/${post.user._id}` }" class="user-photo border circle btn">
         <img @load="successLoadImg" :src="photo" alt="" class="hide" />
-      </div>
+      </router-link>
       <div class="info">
-        <router-link to="/" class="btn">{{ post.user.name }}</router-link>
+        <router-link :to="{ path: `/profile/${post.user._id}` }" class="btn">
+          {{ post.user.name }}
+        </router-link>
         <span>{{ $filters.date(post.createdAt) }}</span>
       </div>
     </div>
@@ -42,9 +44,9 @@
 
     <!-- 留言 -->
     <div class="comment-wrapper">
-      <div class="user-photo circle border">
+      <router-link :to="{ path: `/profile/${user._id}` }" class="user-photo border circle btn">
         <img @load="successLoadImg" :src="user.photo" alt="" class="hide" />
-      </div>
+      </router-link>
       <div class="comment border">
         <label for="comment">
           <input
@@ -61,16 +63,22 @@
 
     <div v-for="(comment, key) in post.comments" :key="key" class="comments">
       <div class="header">
-        <div class="user-photo border circle">
+        <router-link
+          :to="{ path: `/profile/${comment.user._id}` }"
+          class="user-photo border circle btn"
+        >
           <img
             @load="successLoadImg"
             :src="comment.user.photo !== '' ? comment.user.photo : commentPhoto"
             alt=""
             class="hide"
           />
-        </div>
+        </router-link>
+
         <div class="info">
-          <router-link to="/" class="btn">{{ comment.user.name }}</router-link>
+          <router-link :to="{ path: `/profile/${comment.user._id}` }" class="btn">
+            {{ comment.user.name }}
+          </router-link>
           <span>{{ $filters.date(comment.createdAt) }}</span>
         </div>
       </div>
@@ -199,6 +207,17 @@ export default {
   padding: 1.5rem;
 }
 
+.user-photo {
+  &:hover {
+    img {
+      filter: brightness(0.9);
+    }
+  }
+  img {
+    transition: $transition-1;
+  }
+}
+
 .header {
   display: grid;
   grid-column-gap: 1rem;
@@ -213,7 +232,12 @@ export default {
     justify-content: space-around;
   }
   a {
+    width: fit-content;
     font-weight: bold;
+    &:hover {
+      color: $blue-dark;
+      text-decoration: underline;
+    }
   }
   span {
     color: $grey-dark;

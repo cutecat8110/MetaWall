@@ -1,5 +1,5 @@
 <template>
-  <div class="posts-wall">
+  <div class="profile">
     <SubNav></SubNav>
     <PostsNone v-if="posts.length == 0"></PostsNone>
     <Posts v-for="item in posts" :key="item._id" :tempPost="item"></Posts>
@@ -12,7 +12,7 @@ import PostsNone from '@/components/PostsNone.vue';
 import SubNav from '@/components/SubNav.vue';
 
 export default {
-  name: 'PostsWallView',
+  name: 'ProfileView',
   components: {
     Posts,
     PostsNone,
@@ -28,13 +28,14 @@ export default {
   },
   watch: {
     $route() {
-      if (this.$route.name === 'posts_wall') this.getPosts();
+      if (this.$route.name === 'profile') this.getPosts();
     },
   },
   methods: {
     getPosts() {
       this.$store.commit('Load', true);
-      let query = new URLSearchParams(this.$route.query).toString();
+      const tempQuery = { ...this.$route.query, ...this.$route.params };
+      let query = new URLSearchParams(tempQuery).toString();
       if (query) query = `?${query}`;
       const api = `${process.env.VUE_APP_API}/posts${query}`;
       const headers = {
@@ -59,7 +60,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.posts-wall {
+.profile {
   display: grid;
   grid-gap: 1rem;
   width: 100%;

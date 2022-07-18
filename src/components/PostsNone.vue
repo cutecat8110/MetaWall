@@ -1,5 +1,5 @@
 <template>
-  <div class="border bg-white posts-none radius">
+  <div class="border bg-white shadow radius">
     <ul class="ball-group">
       <li class="ball circle" />
       <li class="ball circle" />
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'PostsNoneCom',
+  name: 'PostsNoneCMPT',
   computed: {
     message() {
       if (this.$route.query.q) return `找不到符合「${this.$route.query.q}」的貼文`;
@@ -22,9 +22,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.posts-none {
-  box-shadow: 0 3px 0 $black;
-}
 .ball-group {
   display: flex;
   padding: 1rem;
@@ -53,5 +50,4 @@ export default {
   color: $grey-dark;
   text-align: center;
 }
-
 </style>

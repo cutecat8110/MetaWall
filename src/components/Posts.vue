@@ -1,5 +1,5 @@
 <template>
-  <div class="post border bg-white radius">
+  <div class="post border bg-white radius shadow">
     <!-- 貼文資訊 -->
     <div class="header">
       <router-link :to="{ path: `/profile/${post.user._id}` }" class="user-photo border circle btn">
@@ -91,7 +91,7 @@
 
 <script>
 export default {
-  name: 'PostsCom',
+  name: 'PostsCMPT',
   props: ['tempPost'],
   data() {
     return {
@@ -233,6 +233,7 @@ export default {
   }
   a {
     width: fit-content;
+
     font-weight: bold;
     &:hover {
       color: $blue-dark;
@@ -309,6 +310,8 @@ export default {
 
       &:hover {
         background: $yellow;
+
+        color: $black;
       }
     }
   }
@@ -323,4 +326,5 @@ export default {
     margin-left: calc(45px + 1rem);
   }
 }
+
 </style>

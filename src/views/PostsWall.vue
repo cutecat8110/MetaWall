@@ -1,8 +1,8 @@
 <template>
   <div class="posts-wall">
-    <SubNav></SubNav>
-    <PostsNone v-if="posts.length == 0"></PostsNone>
-    <Posts v-for="item in posts" :key="item._id" :tempPost="item"></Posts>
+    <SubNav />
+    <PostsNone v-if="posts.length == 0" />
+    <Posts v-for="item in posts" :key="item._id" :tempPost="item" />
   </div>
 </template>
 
@@ -37,11 +37,8 @@ export default {
       let query = new URLSearchParams(this.$route.query).toString();
       if (query) query = `?${query}`;
       const api = `${process.env.VUE_APP_API}/posts${query}`;
-      const headers = {
-        headers: {
-          authorization: localStorage.getItem('authorization'),
-        },
-      };
+      const { headers } = this.$store.state;
+
       this.$http
         .get(api, headers)
         .then((res) => {

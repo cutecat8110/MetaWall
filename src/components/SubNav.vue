@@ -41,7 +41,7 @@
 
 <script>
 export default {
-  name: 'SubNavCom',
+  name: 'SubNavCMPT',
   data() {
     return {
       select: false,

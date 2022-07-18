@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: 'HeaderCom',
+  name: 'HeaderCMPT',
   data() {
     return {
       select: false,

@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <div class="border bg-white title">
-      <h1 class="border bg-white">張貼動態</h1>
-    </div>
-    <VForm v-slot="{ errors }" @submit="createPosts" class="post border bg-white radius">
+  <div class="post">
+    <Title :title="'張貼動態'" />
+    <VForm v-slot="{ errors }" @submit="createPosts" class="border bg-white radius">
       <label for="content" class="content-wrapper"
         >貼文內容
         <VField
@@ -56,8 +54,13 @@
 </template>
 
 <script>
+import Title from '@/components/Title.vue';
+
 export default {
   name: 'PostView',
+  components: {
+    Title,
+  },
   data() {
     return {
       content: '',
@@ -140,21 +143,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.title {
-  margin-bottom: 1rem;
-
-  transform: translate(-5px, 5px);
-  h1 {
-    padding: 1rem 0;
-
-    text-align: center;
-    font-size: 1.25rem;
-
-    transform: translate(5px, -5px);
-  }
+.post {
+  display: grid;
+  grid-gap: 1rem;
 }
 
-.post {
+form {
   padding: 2rem;
 }
 

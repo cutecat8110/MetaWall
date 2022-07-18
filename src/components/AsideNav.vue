@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: 'AsideNavCom',
+  name: 'AsideNavCMPT',
   computed: {
     user() {
       const { user } = this.$store.state;
@@ -64,9 +64,12 @@ ul {
 
   color: $white;
   text-align: center;
+  font-weight: bold;
 
   &:hover {
     background: $yellow;
+
+    color: $black;
   }
 }
 

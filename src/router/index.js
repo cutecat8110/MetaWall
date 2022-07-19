@@ -25,6 +25,16 @@ const routes = [
         name: 'profile',
         component: () => import('@/views/Profile.vue'),
       },
+      {
+        path: 'follow_list',
+        name: 'follow_list',
+        component: () => import('@/views/FollowList.vue'),
+      },
+      {
+        path: 'like_list',
+        name: 'like_list',
+        component: () => import('@/views/LikeList.vue'),
+      },
     ],
   },
   {

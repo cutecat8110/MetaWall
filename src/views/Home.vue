@@ -37,6 +37,9 @@ export default {
 
         this.$store.commit('user', user);
       })
+      .catch((err) => {
+        console.error(err);
+      })
       .then(() => {
         this.$store.commit('Load', false);
       });

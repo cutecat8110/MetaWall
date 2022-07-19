@@ -1,30 +1,30 @@
 <template>
   <ul class="aside-nav border bg-white">
     <li>
-      <router-link to="/post" class="btn post radius">張貼動態</router-link>
+      <router-link to="/post" class="btn post radius fw-bold">張貼動態</router-link>
     </li>
     <li>
       <router-link :to="{ path: `/profile/${user._id}` }" class="btn link">
         <div class="user-photo border circle">
           <img @load="successLoadImg" :src="user.photo" alt="" class="hide" />
         </div>
-        <span class="text">{{ user.name }}</span>
+        <span class="fw-bold">{{ user.name }}</span>
       </router-link>
     </li>
     <li>
-      <router-link :to="{ path: `/` }" class="btn link">
+      <router-link :to="{ path: `/follow_list` }" class="btn link">
         <div class="btn-icon border circle">
           <span class="material-icons"> notifications_none </span>
         </div>
-        <span class="text">追蹤名單</span>
+        <span class="fw-bold">追蹤名單</span>
       </router-link>
     </li>
     <li>
-      <router-link :to="{ path: `/` }" class="btn link">
+      <router-link :to="{ path: `/like_list` }" class="btn link">
         <div class="btn-icon border circle">
           <span class="material-icons"> thumb_up_off_alt </span>
         </div>
-        <span class="text">我按讚的文章</span>
+        <span class="fw-bold">我按讚的文章</span>
       </router-link>
     </li>
   </ul>
@@ -64,7 +64,6 @@ ul {
 
   color: $white;
   text-align: center;
-  font-weight: bold;
 
   &:hover {
     background: $yellow;
@@ -94,14 +93,12 @@ ul {
     transition: $transition-1;
   }
 
-  .text {
-    font-weight: bold;
-
+  .fw-bold {
     transition: $transition-1;
   }
 
   &:hover {
-    > .text {
+    > .fw-bold {
       color: $blue-dark;
     }
 

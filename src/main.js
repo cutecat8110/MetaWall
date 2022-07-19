@@ -13,7 +13,7 @@ import { localize, setLocale } from '@vee-validate/i18n';
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 
 // 自訂
-import { date, currency } from './methods/filters';
+import { date, currency, now } from './methods/filters';
 import { successLoadImg } from './methods/successLoadImg';
 
 // 原生
@@ -37,6 +37,7 @@ const app = createApp(App);
 app.config.globalProperties.$filters = {
   date,
   currency,
+  now,
 };
 
 app.config.globalProperties.successLoadImg = successLoadImg;

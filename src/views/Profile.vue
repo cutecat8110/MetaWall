@@ -13,7 +13,7 @@
           <button
             v-if="user._id !== profile._id && profile.name"
             type="button"
-            class="btn border radius shadow"
+            class="btn border radius shadow fw-bold"
             :class="{ follow: follow }"
             @click="toggle(follow)"
           >
@@ -184,8 +184,6 @@ export default {
         padding: 0.375rem 2rem;
 
         background: $yellow;
-
-        font-weight: bold;
         &.follow {
           background: $grey-light;
         }
@@ -205,5 +203,4 @@ export default {
     height: 100%;
   }
 }
-
 </style>

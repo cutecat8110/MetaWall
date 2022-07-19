@@ -6,7 +6,7 @@
         <img @load="successLoadImg" :src="photo" alt="" class="hide" />
       </router-link>
       <div class="info">
-        <router-link :to="{ path: `/profile/${post.user._id}` }" class="btn">
+        <router-link :to="{ path: `/profile/${post.user._id}` }" class="btn fw-bold">
           {{ post.user.name }}
         </router-link>
         <span>{{ $filters.date(post.createdAt) }}</span>
@@ -76,7 +76,7 @@
         </router-link>
 
         <div class="info">
-          <router-link :to="{ path: `/profile/${comment.user._id}` }" class="btn">
+          <router-link :to="{ path: `/profile/${comment.user._id}` }" class="btn fw-bold">
             {{ comment.user.name }}
           </router-link>
           <span>{{ $filters.date(comment.createdAt) }}</span>
@@ -233,8 +233,6 @@ export default {
   }
   a {
     width: fit-content;
-
-    font-weight: bold;
     &:hover {
       color: $blue-dark;
       text-decoration: underline;
@@ -326,5 +324,4 @@ export default {
     margin-left: calc(45px + 1rem);
   }
 }
-
 </style>

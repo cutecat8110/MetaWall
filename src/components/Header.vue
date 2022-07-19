@@ -5,13 +5,17 @@
       <div ref="memberWrapper" class="member-wrapper">
         <button type="button" class="member-btn btn" @click="toggle()">
           <div class="user-photo border circle">
-            <img @load="successLoadImg" :src="src" alt="" class="hide" />
+            <img @load="successLoadImg" :src="user.photo" alt="" class="hide" />
           </div>
           <span class="member-text">Member</span>
         </button>
         <div ref="memberDropdown" v-if="select" class="border bg-white dropdown-wrapper">
           <ul class="border bg-white dropdown">
-            <li class="btn">我的貼文牆</li>
+            <li class="btn">
+              <router-link :to="{ path: `/profile/${user._id}` }" class="btn link" @click="toggle">
+                我的貼文牆
+              </router-link>
+            </li>
             <li class="btn">修改個人資料</li>
             <li class="btn" @click="signOut()" @keyup="signOut()">登出</li>
           </ul>
@@ -42,10 +46,15 @@ export default {
     document.removeEventListener('click', this.memberDropdownClick);
     window.removeEventListener('resize', this.memberDropdownOffset);
   },
+  watch: {
+    $route() {
+      this.select = false;
+    },
+  },
   computed: {
-    src() {
-      const { photo } = this.$store.state.user;
-      return photo;
+    user() {
+      const { user } = this.$store.state;
+      return user;
     },
   },
   methods: {

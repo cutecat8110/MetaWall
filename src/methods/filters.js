@@ -6,6 +6,10 @@ export function date(time) {
   return moment(time).format('YYYY/MM/DD hh:mm');
 }
 
+export function now(time) {
+  return moment(time).locale('zh-tw').fromNow(true);
+}
+
 export function currency(num) {
   const n = parseInt(num, 10);
   return `${n

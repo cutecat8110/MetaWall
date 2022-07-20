@@ -35,6 +35,23 @@ const routes = [
         name: 'like_list',
         component: () => import('@/views/LikeList.vue'),
       },
+      {
+        path: 'setting',
+        name: 'setting',
+        component: () => import('@/views/Setting.vue'),
+        children: [
+          {
+            path: '',
+            name: 'account',
+            component: () => import('@/views/Account.vue'),
+          },
+          {
+            path: 'security',
+            name: 'security',
+            component: () => import('@/views/Security.vue'),
+          },
+        ],
+      },
     ],
   },
   {

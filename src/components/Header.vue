@@ -16,7 +16,11 @@
                 我的貼文牆
               </router-link>
             </li>
-            <li class="btn">修改個人資料</li>
+            <li class="btn">
+              <router-link :to="{ path: `/setting` }" class="btn link" @click="toggle">
+                修改個人資料
+              </router-link>
+            </li>
             <li class="btn" @click="signOut()" @keyup="signOut()">登出</li>
           </ul>
         </div>

@@ -32,7 +32,6 @@ export default {
         const { user } = res.data;
         delete user.followers;
         delete user.following;
-        delete user.sex;
         if (user.photo === '') user.photo = `${process.env.VUE_APP_USER_PHOTO}`;
 
         this.$store.commit('user', user);

@@ -5,12 +5,15 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 
 // Vee Validate
-import {
-  Form, Field, ErrorMessage, defineRule, configure,
-} from 'vee-validate';
+// eslint-disable-next-line object-curly-newline
+import { Form, Field, ErrorMessage, defineRule, configure } from 'vee-validate';
 import AllRules from '@vee-validate/rules';
 import { localize, setLocale } from '@vee-validate/i18n';
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
+
+// vue-sweetalert2
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 // 自訂
 import { date, currency, now } from './methods/filters';
@@ -45,6 +48,7 @@ app.config.globalProperties.successLoadImg = successLoadImg;
 app.use(store);
 app.use(router);
 app.use(VueAxios, axios);
+app.use(VueSweetalert2);
 app.component('ErrorMessage', ErrorMessage);
 app.component('VField', Field);
 app.component('VForm', Form);

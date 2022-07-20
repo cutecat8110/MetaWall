@@ -5,7 +5,6 @@
       <label for="content" class="content-wrapper"
         >貼文內容
         <VField
-          refs="ee"
           id="content"
           name="內容"
           v-model="content"

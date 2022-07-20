@@ -85,11 +85,13 @@ button {
 
   border-radius: 0.5rem;
   background: $blue-dark;
-  box-shadow: -2px 2px 0 #000400;
+  box-shadow: -2px 2px 0 $black;
 
   color: $white;
   &:hover {
     background: $yellow;
+
+    color: $black;
   }
   &:disabled {
     border-color: $grey-darker;
@@ -141,9 +143,35 @@ button {
 }
 
 .shadow {
-  box-shadow: 0px 3px 0px $black;
+  box-shadow: 0 3px 0 $black;
 }
 
 .fw-bold {
   font-weight: Bold;
+}
+
+.swal2-actions.customize {
+  .swal2-confirm {
+    border: 2px solid $black;
+    border-radius: 0.5rem;
+    background: $blue-dark;
+    box-shadow: -2px 2px 0 $black;
+    &:hover {
+      background: $yellow;
+
+      color: $black;
+    }
+  }
+}
+
+.swal2-icon.customize {
+  .swal2-success-line-tip {
+    background-color: $blue-dark;
+  }
+  .swal2-success-line-long {
+    background-color: $blue-dark;
+  }
+  .swal2-success-ring {
+    border-color: $blue-light;
+  }
 }

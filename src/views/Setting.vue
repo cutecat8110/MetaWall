@@ -48,10 +48,11 @@ export default {
 
 .form-wrapper {
   padding: 2rem 6.5rem;
+  @media (max-width: $pad) {
+    padding: 2rem 3rem;
+  }
+  @media (max-width: $mobile) {
+    padding: 1rem 1rem;
+  }
 }
-
-form {
-  background: green;
-}
-
 </style>

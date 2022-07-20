@@ -279,6 +279,7 @@ export default {
 .comment-wrapper {
   display: grid;
   grid-gap: 0.5rem;
+  width: 100%;
   grid-template-columns: 2.5rem 1fr;
   .user-photo {
     width: 2.5rem;
@@ -295,6 +296,8 @@ export default {
     }
 
     input {
+      width: 100%;
+
       outline: none;
       border: 0;
     }
@@ -310,6 +313,12 @@ export default {
         background: $yellow;
 
         color: $black;
+      }
+      @media (max-width: $pad) {
+        padding: 0.5rem 2.25rem;
+      }
+      @media (max-width: $mobile) {
+        padding: 0.5rem 1.5rem;
       }
     }
   }

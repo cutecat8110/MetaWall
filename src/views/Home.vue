@@ -53,5 +53,19 @@ export default {
   grid-template-columns: 5fr 3fr;
   margin-top: 3rem;
   margin-bottom: 3.875rem;
+
+  @media (max-width: $pad) {
+    grid-gap: 0;
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: $pad) {
+  aside {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 0.5rem;
+    width: 100%;
+  }
 }
 </style>

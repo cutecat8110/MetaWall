@@ -42,8 +42,8 @@ export default {
 
   data() {
     return {
-      password: 'Vul3xm4000000',
-      confirmPassword: 'Vul3xm4000000',
+      password: '',
+      confirmPassword: '',
     };
   },
   computed: {},

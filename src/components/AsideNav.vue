@@ -1,7 +1,12 @@
 <template>
   <ul class="aside-nav border bg-white">
     <li>
-      <router-link to="/post" class="btn post radius fw-bold">張貼動態</router-link>
+      <router-link to="/post" class="btn">
+        <span class="fw-bold btn post radius"> 張貼動態 </span>
+        <div class="border btn circle">
+          <span class="material-icons"> add </span>
+        </div>
+      </router-link>
     </li>
     <li>
       <router-link :to="{ path: `/profile/${user._id}` }" class="btn link">
@@ -47,12 +52,34 @@ export default {
   position: sticky;
   top: 6.75rem;
   padding: 2rem 1.5rem;
+
+  @media (max-width: $pad) {
+    position: static;
+    top: auto;
+    padding: 0.5rem;
+  }
 }
 
 ul {
   display: grid;
 
   gap: 1rem;
+  @media (max-width: $pad) {
+    display: flex;
+    justify-content: center;
+
+    border-radius: 50rem;
+
+    gap: 1.5rem;
+    li:first-child {
+      order: 4;
+    }
+  }
+  @media (max-width: $mobile) {
+    justify-content: space-around;
+
+    gap: normal;
+  }
 }
 
 .post {
@@ -70,6 +97,43 @@ ul {
 
     color: $black;
   }
+  & ~ .circle {
+    display: none;
+
+    background: $blue-dark;
+
+    color: $white;
+    @media (max-width: $pad) {
+      display: flex;
+    }
+    &:hover {
+      background: $yellow;
+
+      color: $black;
+    }
+  }
+}
+
+.fw-bold {
+  transition: $transition-1;
+  @media (max-width: $pad) {
+    display: none;
+  }
+}
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.125rem;
+  height: 3.125rem;
+
+  background: $blue-light;
+
+  transition: $transition-1;
+  @media (max-width: $pad) {
+    width: 3rem;
+    height: 3rem;
+  }
 }
 
 .link {
@@ -77,23 +141,13 @@ ul {
   align-items: center;
 
   .circle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     margin-right: 1rem;
-    width: 3.125rem;
-    height: 3.125rem;
-
-    background: $blue-light;
-
-    transition: $transition-1;
+    @media (max-width: $pad) {
+      margin-right: 0;
+    }
   }
 
   img {
-    transition: $transition-1;
-  }
-
-  .fw-bold {
     transition: $transition-1;
   }
 

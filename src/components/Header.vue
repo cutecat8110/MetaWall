@@ -175,6 +175,9 @@ header {
 
   .btn {
     padding: 0.5rem 2.5rem;
+    @media (max-width: $pad) {
+      padding: 0.5rem 1.5rem;
+    }
 
     text-align: center;
     &:not(:last-child) {

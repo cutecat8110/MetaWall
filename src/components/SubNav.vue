@@ -95,6 +95,9 @@ export default {
   display: grid;
   grid-gap: 0.75rem;
   grid-template-columns: 9.75rem 1fr;
+  @media (max-width: $pad) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .filter-wrapper {

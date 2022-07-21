@@ -14,16 +14,19 @@
       <span class="created"> 追蹤時間：{{ $filters.date(follow.createdAt) }} </span>
       <span class="day">您已追蹤 {{ $filters.now(follow.createdAt) }}! </span>
     </div>
+    <PostsNone v-if="list.length == 0" />
   </div>
 </template>
 
 <script>
 import Title from '@/components/Title.vue';
+import PostsNone from '@/components/PostsNone.vue';
 
 export default {
   name: 'FollowListView',
   components: {
     Title,
+    PostsNone,
   },
   data() {
     return {

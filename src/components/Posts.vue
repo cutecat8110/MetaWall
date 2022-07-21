@@ -14,7 +14,7 @@
     </div>
 
     <!-- 貼文內容 -->
-    <p>
+    <p class="content">
       {{ post.content }}
     </p>
 
@@ -242,6 +242,10 @@ export default {
     color: $grey-dark;
     font-size: 0.75rem;
   }
+}
+
+.content {
+  white-space: pre-wrap;
 }
 
 .image-wrapper {

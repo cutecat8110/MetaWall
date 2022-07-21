@@ -2,7 +2,7 @@
   <div class="sign-up-view">
     <div class="middle">
       <div class="container border">
-        <img class="cursor-none" src="@/assets/img/sign.svg" alt="" />
+        <img @load="successLoadImg" class="cursor-none hide" :src="bg" alt="" />
         <div class="auth-content">
           <h2 class="cursor-none">MetaWall</h2>
           <h3>到元宇宙展開全新社交圈</h3>
@@ -73,6 +73,7 @@ export default {
         password: '',
       },
       message: '',
+      bg: process.env.VUE_APP_SIGN_BG,
     };
   },
   watch: {

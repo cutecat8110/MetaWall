@@ -44,7 +44,7 @@
         </li>
         <li>
           <a
-            href="https://agile-anchorage-83053.herokuapp.com/api-docs/"
+            :href="`${process.env.VUE_APP_API}/api-docs/`"
             class="btn"
             target="_blank"
           >

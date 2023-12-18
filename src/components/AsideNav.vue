@@ -44,7 +44,7 @@
         </li>
         <li>
           <a
-            :href="`${process.env.VUE_APP_API}/api-docs/`"
+            href="https://metawall-backend-c89d.onrender.com/api-docs/"
             class="btn"
             target="_blank"
           >

@@ -1,4 +1,4 @@
-const { defineConfig } = require('@vue/cli-service');
+const { defineConfig } = require('@vue/cli-service')
 
 module.exports = defineConfig({
   transpileDependencies: true,
@@ -6,10 +6,12 @@ module.exports = defineConfig({
   css: {
     loaderOptions: {
       scss: {
-        additionalData: '@import "@/assets/scss/helpers/_variables.scss";',
-      },
-    },
+        additionalData: '@import "@/assets/scss/helpers/_variables.scss";'
+      }
+    }
   },
 
-  publicPath: '/metawall/dist/'
-});
+  outputDir: 'docs',
+
+  publicPath: '/metawall-front/'
+})

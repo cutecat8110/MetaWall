@@ -3,12 +3,12 @@
     <Title :title="'追蹤名單'" />
     <div v-for="follow in list" :key="follow.user._id" class="card border bg-white shadow radius">
       <router-link
-        :to="{ path: `/profile/${follow.user._id}` }"
         class="user-photo border circle btn"
+        :to="{ path: `/profile/${follow.user._id}` }"
       >
-        <img @load="successLoadImg" :src="follow.user.photo || photo" alt="" class="hide" />
+        <img class="hide" :src="follow.user.photo || photo" alt="" @load="successLoadImg" />
       </router-link>
-      <router-link :to="{ path: `/profile/${follow.user._id}` }" class="fw-bold btn">
+      <router-link class="fw-bold btn" :to="{ path: `/profile/${follow.user._id}` }">
         {{ follow.user.name }}
       </router-link>
       <span class="created"> 追蹤時間：{{ $filters.date(follow.createdAt) }} </span>
@@ -19,44 +19,44 @@
 </template>
 
 <script>
-import Title from '@/components/Title.vue';
-import PostsNone from '@/components/PostsNone.vue';
+import Title from '@/components/Title.vue'
+import PostsNone from '@/components/PostsNone.vue'
 
 export default {
   name: 'FollowListView',
   components: {
     Title,
-    PostsNone,
+    PostsNone
   },
   data() {
     return {
       list: [],
-      photo: process.env.VUE_APP_USER_PHOTO,
-    };
+      photo: process.env.VUE_APP_USER_PHOTO
+    }
   },
   created() {
-    this.getList();
+    this.getList()
   },
   methods: {
     getList() {
-      this.$store.commit('Load', true);
-      const api = `${process.env.VUE_APP_API}/user/profile`;
-      const { headers } = this.$store.state;
+      this.$store.commit('Load', true)
+      const api = `${process.env.VUE_APP_API}/user/profile`
+      const { headers } = this.$store.state
       this.$http
         .get(api, headers)
         .then((res) => {
-          const { user } = res.data;
-          this.list = user.following;
+          const { user } = res.data
+          this.list = user.following
         })
         .catch((err) => {
-          console.error(err);
+          console.error(err)
         })
         .then(() => {
-          this.$store.commit('Load', false);
-        });
-    },
-  },
-};
+          this.$store.commit('Load', false)
+        })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -107,3 +107,4 @@ export default {
   font-size: 0.875rem;
 }
 </style>
+

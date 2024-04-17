@@ -1,29 +1,29 @@
 <template>
   <div class="post">
     <Title :title="'張貼動態'" />
-    <VForm v-slot="{ errors }" @submit="createPosts" class="border bg-white radius">
-      <label for="content" class="content-wrapper"
+    <VForm v-slot="{ errors }" class="border bg-white radius" @submit="createPosts">
+      <label class="content-wrapper" for="content"
         >貼文內容
         <VField
           id="content"
-          name="內容"
           v-model="content"
-          placeholder="輸入您的貼文內容"
           class="content border"
-          rules="required"
+          name="內容"
+          placeholder="輸入您的貼文內容"
           as="textarea"
+          rules="required"
         />
         <error-message name="內容" />
       </label>
-      <label for="uploadImage" class="btn upload">
+      <label class="btn upload" for="uploadImage">
         上傳圖片
         <VField
           id="uploadImage"
+          class="hide"
           name="uploadImage"
           type="file"
-          class="hide"
-          @change="upload(errors)"
           :rules="{ ext: ['jpg', 'png', 'jpeg'] }"
+          @change="upload(errors)"
         />
       </label>
       <div class="image-wrapper border radius">
@@ -32,8 +32,8 @@
             <span class="material-icons"> image </span>
           </div>
           <template v-if="image">
-            <img ref="postsPhoto" @load="successLoadImg, size()" :src="image" alt="" class="hide" />
-            <button type="button" class="btn border clear circle" @click="clearImg">
+            <img ref="postsPhoto" class="hide" :src="image" alt="" @load="successLoadImg, size()" />
+            <button class="btn border clear circle" type="button" @click="clearImg">
               <span class="material-icons"> close </span>
             </button>
           </template>
@@ -44,7 +44,7 @@
       </error-message>
       <div v-if="errMessage" class="error-message">{{ errMessage }}</div>
       <div class="submit-wrapper">
-        <button type="submit" class="btn border submit" :disabled="disabled(errors)">
+        <button class="btn border submit" type="submit" :disabled="disabled(errors)">
           送出貼文
         </button>
       </div>
@@ -53,12 +53,12 @@
 </template>
 
 <script>
-import Title from '@/components/Title.vue';
+import Title from '@/components/Title.vue'
 
 export default {
   name: 'PostView',
   components: {
-    Title,
+    Title
   },
   data() {
     return {
@@ -66,79 +66,79 @@ export default {
       image: '',
       err: true,
       errMessage: '',
-      paddingBottom: {},
-    };
+      paddingBottom: {}
+    }
   },
   methods: {
     createPosts() {
-      this.$store.commit('Load', true);
-      const api = `${process.env.VUE_APP_API}/post`;
-      const { headers } = this.$store.state;
+      this.$store.commit('Load', true)
+      const api = `${process.env.VUE_APP_API}/post`
+      const { headers } = this.$store.state
 
       const data = {
         user: this.$store.state.user._id,
         image: this.image,
-        content: this.content,
-      };
+        content: this.content
+      }
       this.$http
         .post(api, data, headers)
         .then(() => {
-          this.$router.push({ name: 'posts_wall' });
+          this.$router.push({ name: 'posts_wall' })
         })
         .catch((err) => {
-          console.error(err);
+          console.error(err)
         })
         .then(() => {
-          this.$store.commit('Load', false);
-        });
+          this.$store.commit('Load', false)
+        })
     },
     async upload(errors) {
-      this.errMessage = '';
-      this.image = '';
+      this.errMessage = ''
+      this.image = ''
       if (errors.uploadImage === undefined) {
-        this.$store.commit('Load', true);
-        const uploadedFile = document.getElementById('uploadImage').files[0];
-        const formData = new FormData();
-        formData.append('file-to-upload', uploadedFile);
-        const api = `${process.env.VUE_APP_API}/upload/post`;
-        const { headers } = this.$store.state;
+        this.$store.commit('Load', true)
+        const uploadedFile = document.getElementById('uploadImage').files[0]
+        const formData = new FormData()
+        formData.append('file-to-upload', uploadedFile)
+        const api = `${process.env.VUE_APP_API}/upload/post`
+        const { headers } = this.$store.state
         this.$http
           .post(api, formData, headers)
           .then((res) => {
-            const { imgUrl } = res.data;
-            this.image = imgUrl;
+            const { imgUrl } = res.data
+            this.image = imgUrl
           })
           .catch((err) => {
-            this.errMessage = err.response.data.message;
+            this.errMessage = err.response.data.message
           })
           .then(() => {
-            this.$store.commit('Load', false);
-          });
+            this.$store.commit('Load', false)
+          })
       }
     },
     clearImg() {
-      this.image = '';
+      this.image = ''
       this.paddingBottom = {
-        paddingBottom: '52.35%',
-      };
+        paddingBottom: '52.35%'
+      }
     },
     disabled(errors) {
-      const err = Object.keys(errors).length;
-      if (this.content && err === 0) return false;
-      return true;
+      const err = Object.keys(errors).length
+      if (this.content && err === 0) return false
+      return true
     },
     size() {
       if (this.$refs.postsPhoto) {
-        const { height } = this.$refs.postsPhoto;
-        const { width } = this.$refs.postsPhoto;
-        const ratio = (height / width) * 100;
+        const { height } = this.$refs.postsPhoto
+        const { width } = this.$refs.postsPhoto
+        const ratio = (height / width) * 100
         this.paddingBottom = {
-          paddingBottom: ratio > 150 ? '150%' : `${ratio}%`,
-        };
+          paddingBottom: ratio > 150 ? '150%' : `${ratio}%`
+        }
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -259,3 +259,4 @@ form {
   padding: 0 4.5rem;
 }
 </style>
+

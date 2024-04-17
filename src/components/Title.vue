@@ -8,8 +8,8 @@
 <script>
 export default {
   name: 'TitleCMPT',
-  props: ['title'],
-};
+  props: ['title']
+}
 </script>
 
 <style lang="scss" scoped>
@@ -34,3 +34,4 @@ h1 {
   height: 100%;
 }
 </style>
+

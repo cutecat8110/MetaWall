@@ -3,19 +3,19 @@
     <VForm v-slot="{ errors }" @submit="updated">
       <!-- 頭像 -->
       <div class="user-photo border circle">
-        <img @load="successLoadImg" :src="user.photo" alt="" class="hide" />
+        <img class="hide" :src="user.photo" alt="" @load="successLoadImg" />
       </div>
       <!-- 上傳按鈕 -->
       <div class="upload-wrapper">
-        <label for="uploadImage" class="upload btn radius">
+        <label class="upload btn radius" for="uploadImage">
           上傳大頭照
           <VField
             id="uploadImage"
+            class="hide"
             name="uploadImage"
             type="file"
-            class="hide"
-            @change="upload(errors)"
             :rules="{ ext: ['jpg', 'png', 'jpeg'] }"
+            @change="upload(errors)"
           />
         </label>
         <error-message name="uploadImage">
@@ -24,14 +24,14 @@
         <div v-if="errMessage" class="error-message">{{ errMessage }}</div>
       </div>
       <!-- 暱稱 -->
-      <label for="name" class="name-wrapper">
+      <label class="name-wrapper" for="name">
         <div class="title">暱稱</div>
         <VField
           id="name"
-          name="暱稱"
           v-model="user.name"
-          placeholder="輸入您的暱稱"
           class="name border"
+          name="暱稱"
+          placeholder="輸入您的暱稱"
           :rules="{ required: true, min: 2, max: 13 }"
         />
         <error-message class="error-message" name="暱稱" />
@@ -39,19 +39,19 @@
       <!-- 性別 -->
       <div class="sex-wrapper">
         <div class="title">性別</div>
-        <label for="male" class="radio-wrapper">
-          <input type="radio" id="male" v-model="user.sex" value="male" class="radio" />
+        <label class="radio-wrapper" for="male">
+          <input id="male" v-model="user.sex" class="radio" type="radio" value="male" />
           <span class="radio-button"></span>
           男性
         </label>
-        <label for="female" class="radio-wrapper">
-          <input type="radio" id="female" v-model="user.sex" value="female" class="radio" />
+        <label class="radio-wrapper" for="female">
+          <input id="female" v-model="user.sex" class="radio" type="radio" value="female" />
           <span class="radio-button"></span>
           女性
         </label>
       </div>
       <!-- 送出按鈕 -->
-      <button type="submit" class="btn border submit" :disabled="disabled(errors)">送出更新</button>
+      <button class="btn border submit" type="submit" :disabled="disabled(errors)">送出更新</button>
     </VForm>
   </div>
 </template>
@@ -64,114 +64,114 @@ export default {
       user: {
         photo: '',
         name: '',
-        sex: '',
+        sex: ''
       },
-      errMessage: '',
-    };
+      errMessage: ''
+    }
   },
   computed: {
     tempUser() {
-      const { user } = this.$store.state;
-      return user;
+      const { user } = this.$store.state
+      return user
     },
     compare() {
-      const { tempUser } = this;
-      const { user } = this;
+      const { tempUser } = this
+      const { user } = this
       const compare = [
         user.photo !== tempUser.photo,
         user.name !== tempUser.name,
-        user.sex !== tempUser.sex,
-      ].includes(true);
-      return compare;
-    },
+        user.sex !== tempUser.sex
+      ].includes(true)
+      return compare
+    }
   },
   watch: {
     tempUser: {
       handler() {
-        const user = this.tempUser;
+        const user = this.tempUser
         this.user = {
           photo: user.photo,
           name: user.name,
-          sex: user.sex || 'male',
-        };
+          sex: user.sex || 'male'
+        }
       },
       deep: true,
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   methods: {
     async upload(errors) {
-      this.errMessage = '';
+      this.errMessage = ''
       if (errors.uploadImage === undefined) {
-        this.$store.commit('Load', true);
-        const uploadedFile = document.getElementById('uploadImage').files[0];
-        const formData = new FormData();
-        formData.append('file-to-upload', uploadedFile);
-        const api = `${process.env.VUE_APP_API}/upload/avatar`;
-        const { headers } = this.$store.state;
+        this.$store.commit('Load', true)
+        const uploadedFile = document.getElementById('uploadImage').files[0]
+        const formData = new FormData()
+        formData.append('file-to-upload', uploadedFile)
+        const api = `${process.env.VUE_APP_API}/upload/avatar`
+        const { headers } = this.$store.state
         this.$http
           .post(api, formData, headers)
           .then((res) => {
-            const { imgUrl } = res.data;
-            this.user.photo = imgUrl;
+            const { imgUrl } = res.data
+            this.user.photo = imgUrl
           })
           .catch((err) => {
-            this.errMessage = err.response.data.message;
+            this.errMessage = err.response.data.message
           })
           .then(() => {
-            this.$store.commit('Load', false);
-          });
+            this.$store.commit('Load', false)
+          })
       }
     },
     updated() {
-      this.$store.commit('Load', true);
-      const api = `${process.env.VUE_APP_API}/user/profile`;
-      const { headers } = this.$store.state;
-      const data = {};
-      const { tempUser } = this;
-      const newUser = this.user;
-      if (newUser.name !== tempUser.name) data.name = newUser.name;
+      this.$store.commit('Load', true)
+      const api = `${process.env.VUE_APP_API}/user/profile`
+      const { headers } = this.$store.state
+      const data = {}
+      const { tempUser } = this
+      const newUser = this.user
+      if (newUser.name !== tempUser.name) data.name = newUser.name
       if (
         // eslint-disable-next-line operator-linebreak
         newUser.photo !== tempUser.photo &&
         newUser.photo !== `${process.env.VUE_APP_USER_PHOTO}`
       ) {
-        data.photo = newUser.photo;
+        data.photo = newUser.photo
       }
-      if (newUser.sex !== tempUser.sex) data.sex = newUser.sex;
+      if (newUser.sex !== tempUser.sex) data.sex = newUser.sex
 
       this.$http
         .patch(api, data, headers)
         .then((res) => {
-          const { user } = res.data;
-          delete user.followers;
-          delete user.following;
-          if (user.photo === '') user.photo = `${process.env.VUE_APP_USER_PHOTO}`;
+          const { user } = res.data
+          delete user.followers
+          delete user.following
+          if (user.photo === '') user.photo = `${process.env.VUE_APP_USER_PHOTO}`
 
-          this.$store.commit('user', user);
+          this.$store.commit('user', user)
           this.$swal({
             title: '資料已更新',
             icon: 'success',
             customClass: {
               actions: 'customize',
-              icon: 'customize',
-            },
-          });
+              icon: 'customize'
+            }
+          })
         })
         .catch((err) => {
-          console.error(err);
+          console.error(err)
         })
         .then(() => {
-          this.$store.commit('Load', false);
-        });
+          this.$store.commit('Load', false)
+        })
     },
     disabled(errors) {
-      const err = Object.keys(errors).length;
-      if (this.user.name && err === 0 && this.compare) return false;
-      return true;
-    },
-  },
-};
+      const err = Object.keys(errors).length
+      if (this.user.name && err === 0 && this.compare) return false
+      return true
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -271,3 +271,4 @@ export default {
   font-size: 0.875rem;
 }
 </style>
+

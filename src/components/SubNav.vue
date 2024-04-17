@@ -1,20 +1,20 @@
 <template>
   <div class="subnav">
     <div ref="filterWrapper" class="filter-wrapper">
-      <button type="button" class="btn border bg-white filter" @click="toggle()">
+      <button class="btn border bg-white filter" type="button" @click="toggle()">
         {{ asc ? '最舊貼文' : '最新貼文' }}
         <span class="material-icons">expand_more</span>
       </button>
-      <div ref="filterDropdown" v-if="select" class="border bg-white dropdown-wrapper">
+      <div v-if="select" ref="filterDropdown" class="border bg-white dropdown-wrapper">
         <ul class="border bg-white dropdown">
           <li>
-            <router-link :to="{ query: query('desc') }" class="btn" @click="toggle()">
+            <router-link class="btn" :to="{ query: query('desc') }" @click="toggle()">
               最新貼文
               <span v-if="!asc" class="material-icons">check</span>
             </router-link>
           </li>
           <li>
-            <router-link :to="{ query: query('asc') }" class="btn" @click="toggle()">
+            <router-link class="btn" :to="{ query: query('asc') }" @click="toggle()">
               最舊貼文
               <span v-if="asc" class="material-icons">check</span>
             </router-link>
@@ -32,7 +32,7 @@
           @keyup.enter="searchEnter"
         />
       </label>
-      <router-link :to="{ query: query() }" class="btn">
+      <router-link class="btn" :to="{ query: query() }">
         <span class="material-icons"> search </span>
       </router-link>
     </div>
@@ -47,47 +47,47 @@ export default {
       select: false,
       posts: {},
       search: '',
-      asc: false,
-    };
+      asc: false
+    }
   },
   mounted() {
-    document.addEventListener('click', this.filterDropdownClick);
+    document.addEventListener('click', this.filterDropdownClick)
   },
   beforeUnmount() {
-    document.removeEventListener('click', this.filterDropdownClick);
+    document.removeEventListener('click', this.filterDropdownClick)
   },
   watch: {
     $route() {
-      this.asc = this.$route.query.timeSort === 'asc';
-      this.search = this.$route.query.q ? this.$route.query.q : '';
-    },
+      this.asc = this.$route.query.timeSort === 'asc'
+      this.search = this.$route.query.q ? this.$route.query.q : ''
+    }
   },
   methods: {
     query(asc) {
-      const query = {};
-      if (asc === 'asc') query.timeSort = 'asc';
-      if (this.search !== '') query.q = this.search;
-      if (!asc && this.search === '') query.timeSort = this.$route.query.timeSort;
-      return query;
+      const query = {}
+      if (asc === 'asc') query.timeSort = 'asc'
+      if (this.search !== '') query.q = this.search
+      if (!asc && this.search === '') query.timeSort = this.$route.query.timeSort
+      return query
     },
     toggle() {
-      this.select = !this.select;
+      this.select = !this.select
     },
     filterDropdownClick(e) {
       if (this.$refs.filterDropdown) {
-        const isSelf = this.$refs.filterWrapper.contains(e.target);
+        const isSelf = this.$refs.filterWrapper.contains(e.target)
         if (!isSelf) {
-          this.select = false;
+          this.select = false
         }
       }
     },
     searchEnter() {
       this.$router.push({
-        query: this.query(),
-      });
-    },
-  },
-};
+        query: this.query()
+      })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -177,3 +177,4 @@ export default {
   }
 }
 </style>
+

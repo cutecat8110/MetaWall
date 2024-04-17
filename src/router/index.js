@@ -1,8 +1,8 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router'
 // vue-axios
-import axios from 'axios';
+import axios from 'axios'
 
-import store from '@/store';
+import store from '@/store'
 
 const routes = [
   {
@@ -13,27 +13,27 @@ const routes = [
       {
         path: '',
         name: 'posts_wall',
-        component: () => import('@/views/PostsWall.vue'),
+        component: () => import('@/views/PostsWall.vue')
       },
       {
         path: 'post',
         name: 'post',
-        component: () => import('@/views/Post.vue'),
+        component: () => import('@/views/Post.vue')
       },
       {
         path: 'profile/:p',
         name: 'profile',
-        component: () => import('@/views/Profile.vue'),
+        component: () => import('@/views/Profile.vue')
       },
       {
         path: 'follow_list',
         name: 'follow_list',
-        component: () => import('@/views/FollowList.vue'),
+        component: () => import('@/views/FollowList.vue')
       },
       {
         path: 'like_list',
         name: 'like_list',
-        component: () => import('@/views/LikeList.vue'),
+        component: () => import('@/views/LikeList.vue')
       },
       {
         path: 'setting',
@@ -43,56 +43,57 @@ const routes = [
           {
             path: '',
             name: 'account',
-            component: () => import('@/views/Account.vue'),
+            component: () => import('@/views/Account.vue')
           },
           {
             path: 'security',
             name: 'security',
-            component: () => import('@/views/Security.vue'),
-          },
-        ],
-      },
-    ],
+            component: () => import('@/views/Security.vue')
+          }
+        ]
+      }
+    ]
   },
   {
     path: '/sign_in',
     name: 'sign_in',
-    component: () => import('../views/SignIn.vue'),
+    component: () => import('../views/SignIn.vue')
   },
   {
     path: '/sign_up',
     name: 'sign_up',
-    component: () => import('../views/SignUp.vue'),
-  },
-];
+    component: () => import('../views/SignUp.vue')
+  }
+]
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes,
-});
+  routes
+})
 
 router.beforeEach(async (to) => {
-  store.commit('Load', true);
+  store.commit('Load', true)
   if (to.name !== 'sign_in' && to.name !== 'sign_up') {
-    const api = `${process.env.VUE_APP_API}/user/checkLogin`;
+    const api = `${process.env.VUE_APP_API}/user/checkLogin`
     const headers = {
       headers: {
-        authorization: localStorage.getItem('authorization'),
-      },
-    };
-    store.commit('headers', headers);
+        authorization: localStorage.getItem('authorization')
+      }
+    }
+    store.commit('headers', headers)
     const isAuth = await axios
       .get(api, headers)
       .then(() => true)
       .catch(() => '/sign_in')
-      .then();
-    return isAuth;
+      .then()
+    return isAuth
   }
-  return true;
-});
+  return true
+})
 
 router.afterEach(() => {
-  store.commit('Load', false);
-});
+  store.commit('Load', false)
+})
 
-export default router;
+export default router
+

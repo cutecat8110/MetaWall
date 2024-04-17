@@ -13,37 +13,37 @@
 </template>
 
 <script>
-import Header from '@/components/Header.vue';
-import AsideNav from '@/components/AsideNav.vue';
+import Header from '@/components/Header.vue'
+import AsideNav from '@/components/AsideNav.vue'
 
 export default {
   name: 'HomeView',
   components: {
     Header,
-    AsideNav,
+    AsideNav
   },
   created() {
-    this.$store.commit('Load', true);
-    const api = `${process.env.VUE_APP_API}/user/profile`;
-    const { headers } = this.$store.state;
+    this.$store.commit('Load', true)
+    const api = `${process.env.VUE_APP_API}/user/profile`
+    const { headers } = this.$store.state
     this.$http
       .get(api, headers)
       .then((res) => {
-        const { user } = res.data;
-        delete user.followers;
-        delete user.following;
-        if (user.photo === '') user.photo = `${process.env.VUE_APP_USER_PHOTO}`;
+        const { user } = res.data
+        delete user.followers
+        delete user.following
+        if (user.photo === '') user.photo = `${process.env.VUE_APP_USER_PHOTO}`
 
-        this.$store.commit('user', user);
+        this.$store.commit('user', user)
       })
       .catch((err) => {
-        console.error(err);
+        console.error(err)
       })
       .then(() => {
-        this.$store.commit('Load', false);
-      });
-  },
-};
+        this.$store.commit('Load', false)
+      })
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -69,3 +69,4 @@ export default {
   }
 }
 </style>
+

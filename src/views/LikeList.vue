@@ -2,22 +2,22 @@
   <div class="like-list">
     <Title :title="'我按讚的貼文'" />
     <div v-for="post in posts" :key="post._id" class="card border bg-white shadow radius">
-      <router-link :to="{ path: `/profile/${post.user._id}` }" class="user-photo border circle btn">
-        <img @load="successLoadImg" :src="post.user.photo || photo" alt="" class="hide" />
+      <router-link class="user-photo border circle btn" :to="{ path: `/profile/${post.user._id}` }">
+        <img class="hide" :src="post.user.photo || photo" alt="" @load="successLoadImg" />
       </router-link>
       <div class="info">
-        <router-link :to="{ path: `/profile/${post.user._id}` }" class="fw-bold btn">
+        <router-link class="fw-bold btn" :to="{ path: `/profile/${post.user._id}` }">
           {{ post.user.name }}
         </router-link>
         <span class="created">發文時間：{{ $filters.date(post.createdAt) }} </span>
       </div>
-      <button type="button" class="cancel btn fw-bold" @click="unlike(post._id)">
+      <button class="cancel btn fw-bold" type="button" @click="unlike(post._id)">
         <span class="material-icons"> thumb_up_off_alt </span>
         取消
       </button>
       <router-link
-        :to="{ path: `/like_list`, query: { id: `${post._id}` } }"
         class="check btn fw-bold"
+        :to="{ path: `/like_list`, query: { id: `${post._id}` } }"
       >
         <span class="material-icons"> arrow_circle_up </span>
         查看
@@ -29,96 +29,96 @@
 </template>
 
 <script>
-import Title from '@/components/Title.vue';
-import Posts from '@/components/Posts.vue';
-import PostsNone from '@/components/PostsNone.vue';
+import Title from '@/components/Title.vue'
+import Posts from '@/components/Posts.vue'
+import PostsNone from '@/components/PostsNone.vue'
 
 export default {
   name: 'LikeListView',
   components: {
     Title,
     Posts,
-    PostsNone,
+    PostsNone
   },
   data() {
     return {
       posts: [],
       post: {},
       photo: process.env.VUE_APP_USER_PHOTO,
-      load: false,
-    };
+      load: false
+    }
   },
   watch: {
     $route: {
       handler() {
-        this.load = false;
-        this.posts = [];
-        this.post = {};
+        this.load = false
+        this.posts = []
+        this.post = {}
         if (this.$route.query.id) {
-          return this.getPost();
+          return this.getPost()
         }
-        return this.getList();
+        return this.getList()
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   methods: {
     getList() {
-      this.$store.commit('Load', true);
-      const api = `${process.env.VUE_APP_API}/user/likeList`;
-      const { headers } = this.$store.state;
+      this.$store.commit('Load', true)
+      const api = `${process.env.VUE_APP_API}/user/likeList`
+      const { headers } = this.$store.state
       this.$http
         .get(api, headers)
         .then((res) => {
-          const { posts } = res.data;
-          this.posts = posts;
+          const { posts } = res.data
+          this.posts = posts
         })
         .catch((err) => {
-          console.error(err);
+          console.error(err)
         })
         .then(() => {
-          this.$store.commit('Load', false);
-          this.load = true;
-        });
+          this.$store.commit('Load', false)
+          this.load = true
+        })
     },
     getPost() {
-      this.$store.commit('Load', true);
-      const { id } = this.$route.query;
-      const api = `${process.env.VUE_APP_API}/post/${id}`;
-      const { headers } = this.$store.state;
+      this.$store.commit('Load', true)
+      const { id } = this.$route.query
+      const api = `${process.env.VUE_APP_API}/post/${id}`
+      const { headers } = this.$store.state
       this.$http
         .get(api, headers)
         .then((res) => {
-          const { post } = res.data;
-          this.post = post;
+          const { post } = res.data
+          this.post = post
         })
         .catch((err) => {
-          console.error(err);
+          console.error(err)
         })
         .then(() => {
-          this.$store.commit('Load', false);
-          this.load = true;
-        });
+          this.$store.commit('Load', false)
+          this.load = true
+        })
     },
     unlike(id) {
-      this.$store.commit('Load', true);
-      const api = `${process.env.VUE_APP_API}/post/${id}/likes`;
-      const { headers } = this.$store.state;
+      this.$store.commit('Load', true)
+      const api = `${process.env.VUE_APP_API}/post/${id}/likes`
+      const { headers } = this.$store.state
 
       this.$http
         .delete(api, headers)
         .then(() => {
-          this.getList();
+          this.getList()
         })
         .catch((err) => {
-          console.error(err);
+          console.error(err)
         })
         .then(() => {
-          this.$store.commit('Load', false);
-        });
-    },
-  },
-};
+          this.$store.commit('Load', false)
+        })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -182,3 +182,4 @@ export default {
   font-size: 0.875rem;
 }
 </style>
+

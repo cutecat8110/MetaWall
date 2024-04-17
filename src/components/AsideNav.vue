@@ -2,7 +2,7 @@
   <div class="aside-nav">
     <ul class="nav border bg-white">
       <li>
-        <router-link to="/post" class="btn">
+        <router-link class="btn" to="/post">
           <span class="fw-bold btn post radius"> 張貼動態 </span>
           <div class="border btn circle">
             <span class="material-icons"> add </span>
@@ -10,15 +10,15 @@
         </router-link>
       </li>
       <li>
-        <router-link :to="{ path: `/profile/${user._id}` }" class="btn link">
+        <router-link class="btn link" :to="{ path: `/profile/${user._id}` }">
           <div class="user-photo border circle">
-            <img @load="successLoadImg" :src="user.photo" alt="" class="hide" />
+            <img class="hide" :src="user.photo" alt="" @load="successLoadImg" />
           </div>
           <span class="fw-bold">{{ user.name }}</span>
         </router-link>
       </li>
       <li>
-        <router-link :to="{ path: `/follow_list` }" class="btn link">
+        <router-link class="btn link" :to="{ path: `/follow_list` }">
           <div class="btn-icon border circle">
             <span class="material-icons"> notifications_none </span>
           </div>
@@ -26,7 +26,7 @@
         </router-link>
       </li>
       <li>
-        <router-link :to="{ path: `/like_list` }" class="btn link">
+        <router-link class="btn link" :to="{ path: `/like_list` }">
           <div class="btn-icon border circle">
             <span class="material-icons"> thumb_up_off_alt </span>
           </div>
@@ -37,15 +37,15 @@
     <div class="copyright border radius">
       <ul class="external-link">
         <li>
-          <a href="https://github.com/cutecat8110/metawall" class="btn" target="_blank">
+          <a class="btn" href="https://github.com/cutecat8110/metawall" target="_blank">
             <span class="material-icons"> desktop_windows </span>
             前端
           </a>
         </li>
         <li>
           <a
-            href="https://metawall-backend-c89d.onrender.com/api-docs/"
             class="btn"
+            href="https://metawall-backend-c89d.onrender.com/api-docs/"
             target="_blank"
           >
             <span class="material-icons"> settings_ethernet </span>
@@ -53,7 +53,7 @@
           </a>
         </li>
         <li>
-          <a href="https://github.com/cutecat8110/metawall_backend" class="btn" target="_blank">
+          <a class="btn" href="https://github.com/cutecat8110/metawall_backend" target="_blank">
             <span class="material-icons"> storage </span>
             後端
           </a>
@@ -69,11 +69,11 @@ export default {
   name: 'AsideNavCMPT',
   computed: {
     user() {
-      const { user } = this.$store.state;
-      return user;
-    },
-  },
-};
+      const { user } = this.$store.state
+      return user
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -259,3 +259,4 @@ export default {
   }
 }
 </style>
+

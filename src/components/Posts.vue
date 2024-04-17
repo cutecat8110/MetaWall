@@ -2,11 +2,11 @@
   <div class="post border bg-white radius shadow">
     <!-- 貼文資訊 -->
     <div class="header">
-      <router-link :to="{ path: `/profile/${post.user._id}` }" class="user-photo border circle btn">
-        <img @load="successLoadImg" :src="photo" alt="" class="hide" />
+      <router-link class="user-photo border circle btn" :to="{ path: `/profile/${post.user._id}` }">
+        <img class="hide" :src="photo" alt="" @load="successLoadImg" />
       </router-link>
       <div class="info">
-        <router-link :to="{ path: `/profile/${post.user._id}` }" class="btn fw-bold">
+        <router-link class="btn fw-bold" :to="{ path: `/profile/${post.user._id}` }">
           {{ post.user.name }}
         </router-link>
         <span>{{ $filters.date(post.createdAt) }}</span>
@@ -23,19 +23,19 @@
       <div class="clamp" :style="paddingBottom">
         <img
           ref="postsPhoto"
-          @load="successLoadImg, size()"
+          class="hide"
           :src="post.image"
           alt=""
-          class="hide"
+          @load="successLoadImg, size()"
         />
       </div>
     </div>
 
     <!-- 按讚 -->
     <button
-      type="button"
-      class="likes btn"
       :class="{ selected: isSelected }"
+      class="likes btn"
+      type="button"
       @click="toggle(isSelected)"
     >
       <span class="material-icons"> thumb_up_off_alt </span>
@@ -44,39 +44,39 @@
 
     <!-- 留言 -->
     <div class="comment-wrapper">
-      <router-link :to="{ path: `/profile/${user._id}` }" class="user-photo border circle btn">
-        <img @load="successLoadImg" :src="user.photo" alt="" class="hide" />
+      <router-link class="user-photo border circle btn" :to="{ path: `/profile/${user._id}` }">
+        <img class="hide" :src="user.photo" alt="" @load="successLoadImg" />
       </router-link>
       <div class="comment border">
         <label for="comment">
           <input
             id="comment"
+            v-model="comment"
             type="text"
             placeholder="留言..."
-            v-model="comment"
             @keyup.enter="comment"
           />
         </label>
-        <button type="button" class="btn" @click="send">留言</button>
+        <button class="btn" type="button" @click="send">留言</button>
       </div>
     </div>
 
     <div v-for="(comment, key) in post.comments" :key="key" class="comments">
       <div class="header">
         <router-link
-          :to="{ path: `/profile/${comment.user._id}` }"
           class="user-photo border circle btn"
+          :to="{ path: `/profile/${comment.user._id}` }"
         >
           <img
-            @load="successLoadImg"
+            class="hide"
             :src="comment.user.photo !== '' ? comment.user.photo : commentPhoto"
             alt=""
-            class="hide"
+            @load="successLoadImg"
           />
         </router-link>
 
         <div class="info">
-          <router-link :to="{ path: `/profile/${comment.user._id}` }" class="btn fw-bold">
+          <router-link class="btn fw-bold" :to="{ path: `/profile/${comment.user._id}` }">
             {{ comment.user.name }}
           </router-link>
           <span>{{ $filters.date(comment.createdAt) }}</span>
@@ -98,106 +98,106 @@ export default {
       post: {},
       comment: '',
       paddingBottom: {},
-      commentPhoto: process.env.VUE_APP_USER_PHOTO,
-    };
+      commentPhoto: process.env.VUE_APP_USER_PHOTO
+    }
   },
   watch: {
     tempPost: {
       handler() {
-        this.post = this.tempPost;
+        this.post = this.tempPost
       },
       deep: true,
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   computed: {
     user() {
-      return this.$store.state.user;
+      return this.$store.state.user
     },
     photo() {
-      const { photo } = this.post.user;
-      if (photo === '') return `${process.env.VUE_APP_USER_PHOTO}`;
-      return photo;
+      const { photo } = this.post.user
+      if (photo === '') return `${process.env.VUE_APP_USER_PHOTO}`
+      return photo
     },
     isSelected() {
-      const { likes } = this.post;
-      return likes.includes(this.user._id);
-    },
+      const { likes } = this.post
+      return likes.includes(this.user._id)
+    }
   },
   methods: {
     isToday(date) {
-      return this.moment(date).format('YYYY/MM/DD hh:mm');
+      return this.moment(date).format('YYYY/MM/DD hh:mm')
     },
     toggle(isSelected) {
-      this.$store.commit('Load', true);
-      const api = `${process.env.VUE_APP_API}/post/${this.post._id}/likes`;
-      const { headers } = this.$store.state;
+      this.$store.commit('Load', true)
+      const api = `${process.env.VUE_APP_API}/post/${this.post._id}/likes`
+      const { headers } = this.$store.state
       const method = isSelected
         ? this.$http.delete(api, headers)
-        : this.$http.post(api, null, headers);
+        : this.$http.post(api, null, headers)
 
       method
         .then(() => {
-          this.upload();
+          this.upload()
         })
         .catch((err) => {
-          console.error(err);
+          console.error(err)
         })
         .then(() => {
-          this.$store.commit('Load', false);
-        });
+          this.$store.commit('Load', false)
+        })
     },
     send() {
       if (this.comment !== '') {
-        this.$store.commit('Load', true);
-        const api = `${process.env.VUE_APP_API}/post/${this.post._id}/comment`;
-        const { headers } = this.$store.state;
+        this.$store.commit('Load', true)
+        const api = `${process.env.VUE_APP_API}/post/${this.post._id}/comment`
+        const { headers } = this.$store.state
         const comment = {
-          comment: this.comment,
-        };
+          comment: this.comment
+        }
 
         this.$http
           .post(api, comment, headers)
           .then(() => {
-            this.comment = '';
-            this.upload();
+            this.comment = ''
+            this.upload()
           })
           .catch((err) => {
-            console.error(err);
+            console.error(err)
           })
           .then(() => {
-            this.$store.commit('Load', false);
-          });
+            this.$store.commit('Load', false)
+          })
       }
     },
     upload() {
-      this.$store.commit('Load', true);
-      const api = `${process.env.VUE_APP_API}/post/${this.post._id}`;
-      const { headers } = this.$store.state;
+      this.$store.commit('Load', true)
+      const api = `${process.env.VUE_APP_API}/post/${this.post._id}`
+      const { headers } = this.$store.state
       this.$http
         .get(api, headers)
         .then((res) => {
-          this.post = res.data.post;
+          this.post = res.data.post
         })
         .catch((err) => {
-          console.error(err);
+          console.error(err)
         })
         .then(() => {
-          this.$store.commit('Load', false);
-        });
+          this.$store.commit('Load', false)
+        })
     },
     size() {
       if (this.$refs.postsPhoto) {
-        const { height } = this.$refs.postsPhoto;
-        const { width } = this.$refs.postsPhoto;
-        const ratio = (height / width) * 100;
+        const { height } = this.$refs.postsPhoto
+        const { width } = this.$refs.postsPhoto
+        const ratio = (height / width) * 100
         this.paddingBottom = {
-          paddingBottom: ratio > 150 ? '150%' : `${ratio}%`,
-        };
+          paddingBottom: ratio > 150 ? '150%' : `${ratio}%`
+        }
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -338,3 +338,4 @@ export default {
   }
 }
 </style>
+

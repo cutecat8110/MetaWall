@@ -3,7 +3,7 @@
     <div class="header-wrapper">
       <div class="header border bg-white radius">
         <div class="user-photo">
-          <img @load="successLoadImg" :src="profile.photo" alt="" class="hide" />
+          <img class="hide" :src="profile.photo" alt="" @load="successLoadImg" />
         </div>
         <div class="info">
           <div>
@@ -12,9 +12,9 @@
           </div>
           <button
             v-if="user._id !== profile._id && profile.name"
-            type="button"
-            class="btn border radius shadow fw-bold"
             :class="{ follow: follow }"
+            class="btn border radius shadow fw-bold"
+            type="button"
             @click="toggle(follow)"
           >
             {{ follow ? '取消追蹤' : '追蹤' }}
@@ -30,16 +30,16 @@
 </template>
 
 <script>
-import Posts from '@/components/Posts.vue';
-import PostsNone from '@/components/PostsNone.vue';
-import SubNav from '@/components/SubNav.vue';
+import Posts from '@/components/Posts.vue'
+import PostsNone from '@/components/PostsNone.vue'
+import SubNav from '@/components/SubNav.vue'
 
 export default {
   name: 'ProfileView',
   components: {
     Posts,
     PostsNone,
-    SubNav,
+    SubNav
   },
   data() {
     return {
@@ -48,103 +48,103 @@ export default {
         _id: '',
         photo: '',
         name: '',
-        followers: [],
-      },
-    };
+        followers: []
+      }
+    }
   },
   mounted() {
-    this.getPosts();
-    this.getProfile();
+    this.getPosts()
+    this.getProfile()
   },
   watch: {
     $route() {
       if (this.$route.name === 'profile') {
-        this.posts = {};
-        this.getPosts();
-        this.getProfile();
+        this.posts = {}
+        this.getPosts()
+        this.getProfile()
       }
-    },
+    }
   },
   computed: {
     followers() {
-      const tempList = this.profile.followers;
-      const followers = tempList.map((item) => Object.values(item)[0]);
-      return followers;
+      const tempList = this.profile.followers
+      const followers = tempList.map((item) => Object.values(item)[0])
+      return followers
     },
     follow() {
-      return this.followers.includes(this.user._id);
+      return this.followers.includes(this.user._id)
     },
     user() {
-      const { user } = this.$store.state;
-      return user;
-    },
+      const { user } = this.$store.state
+      return user
+    }
   },
   methods: {
     getPosts() {
-      this.$store.commit('Load', true);
-      const tempQuery = { ...this.$route.query, ...this.$route.params };
-      let query = new URLSearchParams(tempQuery).toString();
-      if (query) query = `?${query}`;
-      const api = `${process.env.VUE_APP_API}/posts${query}`;
-      const { headers } = this.$store.state;
+      this.$store.commit('Load', true)
+      const tempQuery = { ...this.$route.query, ...this.$route.params }
+      let query = new URLSearchParams(tempQuery).toString()
+      if (query) query = `?${query}`
+      const api = `${process.env.VUE_APP_API}/posts${query}`
+      const { headers } = this.$store.state
 
       this.$http
         .get(api, headers)
         .then((res) => {
-          this.posts = res.data.posts;
+          this.posts = res.data.posts
         })
         .catch((err) => {
-          console.error(err);
+          console.error(err)
         })
         .then(() => {
-          this.$store.commit('Load', false);
-        });
+          this.$store.commit('Load', false)
+        })
     },
     getProfile() {
-      this.$store.commit('Load', true);
+      this.$store.commit('Load', true)
 
-      const { p } = this.$route.params;
-      const api = `${process.env.VUE_APP_API}/user/profile?p=${p}`;
-      const { headers } = this.$store.state;
+      const { p } = this.$route.params
+      const api = `${process.env.VUE_APP_API}/user/profile?p=${p}`
+      const { headers } = this.$store.state
 
       this.$http
         .get(api, headers)
         .then((res) => {
-          const { user } = res.data;
-          delete user.following;
-          delete user.sex;
-          if (user.photo === '') user.photo = `${process.env.VUE_APP_USER_PHOTO_2}`;
+          const { user } = res.data
+          delete user.following
+          delete user.sex
+          if (user.photo === '') user.photo = `${process.env.VUE_APP_USER_PHOTO_2}`
 
-          this.profile = user;
+          this.profile = user
         })
         .catch((err) => {
-          console.error(err);
+          console.error(err)
         })
         .then(() => {
-          this.$store.commit('Load', false);
-        });
+          this.$store.commit('Load', false)
+        })
     },
     toggle(follow) {
-      this.$store.commit('Load', true);
+      this.$store.commit('Load', true)
 
-      const { p } = this.$route.params;
-      const api = `${process.env.VUE_APP_API}/user/${p}/follow`;
-      const { headers } = this.$store.state;
-      const method = follow ? this.$http.delete(api, headers) : this.$http.post(api, null, headers);
+      const { p } = this.$route.params
+      const api = `${process.env.VUE_APP_API}/user/${p}/follow`
+      const { headers } = this.$store.state
+      const method = follow ? this.$http.delete(api, headers) : this.$http.post(api, null, headers)
 
       method
         .then(() => {
-          this.getProfile();
+          this.getProfile()
         })
         .catch((err) => {
-          console.error(err);
+          console.error(err)
         })
         .then(() => {
-          this.$store.commit('Load', false);
-        });
-    },
-  },
-};
+          this.$store.commit('Load', false)
+        })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -204,3 +204,4 @@ export default {
   }
 }
 </style>
+

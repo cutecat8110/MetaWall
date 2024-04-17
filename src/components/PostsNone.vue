@@ -14,15 +14,15 @@ export default {
   name: 'PostsNoneCMPT',
   computed: {
     message() {
-      if (this.$route.query.q) return `找不到符合「${this.$route.query.q}」的貼文`;
-      if (this.$route.name === 'profile') return '目前尚無貼文';
-      if (this.$route.name === 'like_list') return '目前尚無動態，按讚一則貼文吧！';
-      if (this.$route.name === 'follow_list') return '目前尚無名單，追蹤一位朋友吧！';
+      if (this.$route.query.q) return `找不到符合「${this.$route.query.q}」的貼文`
+      if (this.$route.name === 'profile') return '目前尚無貼文'
+      if (this.$route.name === 'like_list') return '目前尚無動態，按讚一則貼文吧！'
+      if (this.$route.name === 'follow_list') return '目前尚無名單，追蹤一位朋友吧！'
 
-      return '目前尚無動態，新增一則貼文吧！';
-    },
-  },
-};
+      return '目前尚無動態，新增一則貼文吧！'
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -55,3 +55,4 @@ export default {
   text-align: center;
 }
 </style>
+

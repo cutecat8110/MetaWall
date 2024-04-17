@@ -3,8 +3,8 @@
     <Title :title="'修改個人資料'" />
     <div>
       <div class="tab">
-        <router-link :to="{ name: 'account' }" class="btn border bg-white"> 暱稱修改 </router-link>
-        <router-link :to="{ name: 'security' }" class="btn border bg-white"> 重設密碼 </router-link>
+        <router-link class="btn border bg-white" :to="{ name: 'account' }"> 暱稱修改 </router-link>
+        <router-link class="btn border bg-white" :to="{ name: 'security' }"> 重設密碼 </router-link>
       </div>
       <div class="form-wrapper radius shadow border bg-white">
         <router-view />
@@ -14,14 +14,14 @@
 </template>
 
 <script>
-import Title from '@/components/Title.vue';
+import Title from '@/components/Title.vue'
 
 export default {
   name: 'SettingView',
   components: {
-    Title,
-  },
-};
+    Title
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -56,3 +56,4 @@ export default {
   }
 }
 </style>
+
